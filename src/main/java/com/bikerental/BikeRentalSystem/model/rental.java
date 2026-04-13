@@ -23,7 +23,7 @@ public abstract class Rental {
         this.type = type;
         this.cost = 0.0;
     }
-    
+
     public abstract double calculateCost(double hours);
 
     public String getRentalId() { return rentalId; }
@@ -47,5 +47,11 @@ public abstract class Rental {
                 startStationId + "|" + (endStationId != null ? endStationId : "") + "|" +
                 startTime + "|" + (endTime != null ? endTime : "") + "|" +
                 cost + "|" + status + "|" + type;
+    }
+
+    @Override
+    public String toString() {
+        return "Rental[" + rentalId + " | User:" + userId + " | Bike:" + bikeId +
+                " | Status:" + status + " | Cost:" + cost + "]";
     }
 }
