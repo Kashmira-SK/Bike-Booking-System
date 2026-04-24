@@ -1,11 +1,11 @@
 package com.bikerental.BikeRentalSystem.model;
 
 public class CashPayment {
-    class CardPayment extends Payment {
+    class CashPayment extends Payment {
         private String cardNumber;
         private String cardHolderName;
         private String expiryDate;
-        
+
 
 
 
