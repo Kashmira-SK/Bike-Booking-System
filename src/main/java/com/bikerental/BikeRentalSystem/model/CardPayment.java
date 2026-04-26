@@ -5,3 +5,5 @@ public class CardPayment {
         private String cardNumber;
         private String cardHolderName;
         private String expiryDate;
+    }
+}

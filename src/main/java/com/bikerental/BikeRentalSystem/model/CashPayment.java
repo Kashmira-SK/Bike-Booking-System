@@ -7,6 +7,5 @@ public class CashPayment {
         private String expiryDate;
 
 
-
-
+    }
 }
