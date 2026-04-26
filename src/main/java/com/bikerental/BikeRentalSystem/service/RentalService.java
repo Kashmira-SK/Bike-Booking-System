@@ -33,4 +33,25 @@ public class RentalService {
         }
         return null;
     }
+
+    public List<Rental> findByUserId(String userId) throws IOException {
+        List<Rental> result = new ArrayList<>();
+        for (Rental r : readAll()) {
+            if (r.getUserId().equals(userId)) result.add(r);
+        }
+        return result;
+    }
+
+    public void updateRental(Rental updated) throws IOException {
+        List<Rental> all = readAll();
+        List<String> lines = new ArrayList<>();
+        for (Rental r : all) {
+            if (r.getRentalId().equals(updated.getRentalId())) {
+                lines.add(updated.toFileString());
+            } else {
+                lines.add(r.toFileString());
+            }
+        }
+        FileHelper.writeLines(FILE_PATH, lines);
+    }
 }
