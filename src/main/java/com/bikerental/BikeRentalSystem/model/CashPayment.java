@@ -7,5 +7,12 @@ public class CashPayment {
         private String expiryDate;
 
 
+    }  // Constructor
+
+    public CashPayment(int paymentId, double amount, double cashReceived) {
+        super(paymentId, amount);   // Parent class constructor call
     }
 }
+
+
+
