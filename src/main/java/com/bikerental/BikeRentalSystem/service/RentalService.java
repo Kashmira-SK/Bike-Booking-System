@@ -54,4 +54,27 @@ public class RentalService {
         }
         FileHelper.writeLines(FILE_PATH, lines);
     }
+
+    public void returnBike(String rentalId, String endStationId) throws IOException {
+        Rental rental = findById(rentalId);
+        if (rental == null) return;
+        String endTime = LocalDateTime.now().format(FORMATTER);
+        LocalDateTime start = LocalDateTime.parse(rental.getStartTime(), FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(endTime, FORMATTER);
+        double hours = ChronoUnit.MINUTES.between(start, end) / 60.0;
+        double cost = rental.calculateCost(hours);
+        rental.setEndTime(endTime);
+        rental.setEndStationId(endStationId);
+        rental.setCost(cost);
+        rental.setStatus("COMPLETED");
+        updateRental(rental);
+    }
+
+    public void cancelRental(String rentalId) throws IOException {
+        Rental rental = findById(rentalId);
+        if (rental == null) return;
+        rental.setStatus("CANCELLED");
+        updateRental(rental);
+    }
+
 }
