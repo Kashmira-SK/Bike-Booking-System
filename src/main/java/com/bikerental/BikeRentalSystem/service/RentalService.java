@@ -77,4 +77,15 @@ public class RentalService {
         updateRental(rental);
     }
 
+    public void deleteRental(String rentalId) throws IOException {
+        List<Rental> all = readAll();
+        List<String> lines = new ArrayList<>();
+        for (Rental r : all) {
+            if (!r.getRentalId().equals(rentalId)) {
+                lines.add(r.toFileString());
+            }
+        }
+        FileHelper.writeLines(FILE_PATH, lines);
+    }
+
 }
