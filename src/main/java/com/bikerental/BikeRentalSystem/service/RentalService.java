@@ -88,4 +88,8 @@ public class RentalService {
         FileHelper.writeLines(FILE_PATH, lines);
     }
 
+    public String generateId() throws IOException {
+        return "R" + System.currentTimeMillis();
+    }
+
 }
