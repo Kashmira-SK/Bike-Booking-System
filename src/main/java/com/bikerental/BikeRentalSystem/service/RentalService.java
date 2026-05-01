@@ -92,4 +92,18 @@ public class RentalService {
         return "R" + System.currentTimeMillis();
     }
 
+    private Rental parseRental(String line) {
+        String[] p = line.split("\\|", -1);
+        Rental r;
+        if (p[9].equals("DAILY")) {
+            r = new DailyRental(p[0], p[1], p[2], p[3], p[5]);
+        } else {
+            r = new HourlyRental(p[0], p[1], p[2], p[3], p[5]);
+        }
+        r.setEndStationId(p[4].isEmpty() ? null : p[4]);
+        r.setEndTime(p[6].isEmpty() ? null : p[6]);
+        r.setCost(Double.parseDouble(p[7]));
+        r.setStatus(p[8]);
+        return r;
+
 }
