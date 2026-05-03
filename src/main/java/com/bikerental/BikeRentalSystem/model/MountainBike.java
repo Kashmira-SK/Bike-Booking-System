@@ -1,7 +1,7 @@
 package com.bikerental.BikeRentalSystem.model;
 
 public class MountainBike extends Bike {
-    public ElectricBike(String bikeId, String model, double pricePerHour, String stationId) {
+    public MountainBike(String bikeId, String model, double pricePerHour, String stationId) {
         super(bikeId, "Electric", model, pricePerHour, stationId);
     }
 
