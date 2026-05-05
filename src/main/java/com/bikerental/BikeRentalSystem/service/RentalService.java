@@ -105,5 +105,5 @@ public class RentalService {
         r.setCost(Double.parseDouble(p[7]));
         r.setStatus(p[8]);
         return r;
-
-}
+    }
+}a
