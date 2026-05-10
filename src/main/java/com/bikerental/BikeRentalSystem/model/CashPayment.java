@@ -1,18 +1,15 @@
 package com.bikerental.BikeRentalSystem.model;
 
-public class CashPayment extends Payment {
-    private double cashReceived;
+import com.bikerental.BikeRentalSystem.util.AppConstants;
 
-    public CashPayment(String paymentId, String rentalId, String userId, double amount, String timestamp, double cashReceived) {
-        super(paymentId, rentalId, userId, amount, "CASH", timestamp);
-        this.cashReceived = cashReceived;
+public class CashPayment extends Payment {
+
+    public CashPayment(String id, String rentalId, String userId, double amount, String status, String timestamp) {
+        super(id, rentalId, userId, amount, AppConstants.METHOD_CASH, status, timestamp);
     }
 
     @Override
-    public String getPaymentSummary() {
-        return "Cash Payment | Amount: Rs." + getAmount() + " | Received: Rs." + cashReceived;
+    public String getPaymentMethod() {
+        return "Cash";
     }
-
-    public double getCashReceived() { return cashReceived; }
 }
-

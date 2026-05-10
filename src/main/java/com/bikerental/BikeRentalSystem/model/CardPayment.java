@@ -1,16 +1,15 @@
 package com.bikerental.BikeRentalSystem.model;
 
-import org.springframework.http.converter.json.GsonBuilderUtils;
+import com.bikerental.BikeRentalSystem.util.AppConstants;
 
-    class CardPayment extends Payment {
-        private String cardNumber;
-        private String cardHolderName;
-        private String expiryDate;
+public class CardPayment extends Payment {
+
+    public CardPayment(String id, String rentalId, String userId, double amount, String status, String timestamp) {
+        super(id, rentalId, userId, amount, AppConstants.METHOD_CARD, status, timestamp);
     }
-    // Constructor
-    public CardPayment(int paymentId, double amount, double cashReceived) {
-        super(paymentId, amount);   // Parent class constructor call
+
+    @Override
+    public String getPaymentMethod() {
+        return "Card";
     }
-    vjki
 }
-
