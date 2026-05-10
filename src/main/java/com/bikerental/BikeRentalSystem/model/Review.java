@@ -1,7 +1,8 @@
 package com.bikerental.BikeRentalSystem.model;
 
 public abstract class Review {
-    private String reviewId;
+
+    private String id;
     private String userId;
     private String targetId;
     private int rating;
@@ -9,8 +10,9 @@ public abstract class Review {
     private String type;
     private String timestamp;
 
-    public Review(String reviewId, String userId, String targetId, int rating, String comment, String type, String timestamp) {
-        this.reviewId = reviewId;
+    public Review(String id, String userId, String targetId, int rating,
+                  String comment, String type, String timestamp) {
+        this.id = id;
         this.userId = userId;
         this.targetId = targetId;
         this.rating = rating;
@@ -19,24 +21,24 @@ public abstract class Review {
         this.timestamp = timestamp;
     }
 
-    public abstract String getSummary();
+    public abstract String getReviewType();
 
-    public String getReviewId() { return reviewId; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
     public String getTargetId() { return targetId; }
+    public void setTargetId(String targetId) { this.targetId = targetId; }
     public int getRating() { return rating; }
-    public String getComment() { return comment; }
-    public String getType() { return type; }
-    public String getTimestamp() { return timestamp; }
-    public void setComment(String comment) { this.comment = comment; }
     public void setRating(int rating) { this.rating = rating; }
+    public String getComment() { return comment; }
+    public void setComment(String comment) { this.comment = comment; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+    public String getTimestamp() { return timestamp; }
+    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
 
     public String toFileString() {
-        return reviewId + "|" + userId + "|" + targetId + "|" + rating + "|" + comment + "|" + type + "|" + timestamp;
-    }
-
-    @Override
-    public String toString() {
-        return "Review[" + reviewId + " | User:" + userId + " | Rating:" + rating + "/5 | " + type + "]";
+        return id + "|" + userId + "|" + targetId + "|" + rating + "|" + comment + "|" + type + "|" + timestamp;
     }
 }
