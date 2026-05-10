@@ -1,14 +1,13 @@
 package com.bikerental.BikeRentalSystem.model;
 
 public class RoadBike extends Bike {
-    public RoadBike(String bikeId, String model, double pricePerHour, String stationId) {
-        super(bikeId, "Road", model, pricePerHour, stationId);
+
+    public RoadBike(String id, String model, double pricePerHour, String stationId, String status) {
+        super(id, "ROAD", model, pricePerHour, stationId, status);
     }
 
     @Override
-    public String getBikeDescription() {
-        return "Road Bike - Model: " + getModel() + ", Best for city roads";
+    public String getBikeType() {
+        return "Road Bike";
     }
-
-
 }

@@ -1,13 +1,13 @@
 package com.bikerental.BikeRentalSystem.model;
 
 public class MountainBike extends Bike {
-    public MountainBike(String bikeId, String model, double pricePerHour, String stationId) {
-        super(bikeId, "Electric", model, pricePerHour, stationId);
+
+    public MountainBike(String id, String model, double pricePerHour, String stationId, String status) {
+        super(id, "MOUNTAIN", model, pricePerHour, stationId, status);
     }
 
     @Override
-    public String getBikeDescription() {
-        return "Electric Bike - Model: " + getModel() + ", Battery powered";
+    public String getBikeType() {
+        return "Mountain Bike";
     }
-
 }
