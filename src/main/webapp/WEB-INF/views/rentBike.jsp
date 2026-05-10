@@ -1,46 +1,40 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Rent a Bike</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-    <h2 class="mb-4">Rent a Bike</h2>
+<body class="container mt-4" style="max-width: 520px;">
+    <h2>Rent a Bike</h2>
 
-    <% if(request.getAttribute("success") != null) { %>
-        <div class="alert alert-success">${success}</div>
-    <% } %>
-    <% if(request.getAttribute("error") != null) { %>
+    <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
-    <% } %>
+    </c:if>
 
-    <div class="card p-4 shadow-sm">
-        <form action="/rent" method="post">
-            <div class="mb-3">
-                <label class="form-label">User ID</label>
-                <input type="text" class="form-control" name="userId" required placeholder="e.g. U001">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Bike ID</label>
-                <input type="text" class="form-control" name="bikeId" required placeholder="e.g. B001">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Pickup Station ID</label>
-                <input type="text" class="form-control" name="stationId" required placeholder="e.g. S001">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Rental Type</label>
-                <select class="form-select" name="type">
-                    <option value="HOURLY">Hourly (Rs. 150/hr)</option>
-                    <option value="DAILY">Daily (Rs. 800/day)</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Rent Bike</button>
-            <a href="/rentals" class="btn btn-outline-secondary ms-2">View All Rentals</a>
-        </form>
-    </div>
-</div>
+    <form action="/rentals/rent" method="post">
+        <div class="mb-3">
+            <label class="form-label">Bike ID</label>
+            <input type="text" name="bikeId" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Start Station ID</label>
+            <input type="text" name="startStation" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">End Station ID</label>
+            <input type="text" name="endStation" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Rental Type</label>
+            <select name="type" class="form-select">
+                <option value="HOURLY">Hourly</option>
+                <option value="DAILY">Daily</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Rent Now</button>
+        <a href="/bikes" class="btn btn-secondary ms-2">Browse Bikes</a>
+    </form>
 </body>
 </html>
