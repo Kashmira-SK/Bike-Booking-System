@@ -3,21 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="container mt-5" style="max-width: 480px;">
-    <h2 class="mb-4">Create Account</h2>
+<body class="container mt-5" style="max-width: 440px;">
+    <h2 class="mb-4">Login</h2>
 
     <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
     </c:if>
 
-    <form action="/register" method="post">
-        <div class="mb-3">
-            <label class="form-label">Full Name</label>
-            <input type="text" name="name" class="form-control" required>
-        </div>
+    <form action="/login" method="post">
         <div class="mb-3">
             <label class="form-label">Email</label>
             <input type="email" name="email" class="form-control" required>
@@ -26,12 +22,8 @@
             <label class="form-label">Password</label>
             <input type="password" name="password" class="form-control" required>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Phone</label>
-            <input type="text" name="phone" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Register</button>
-        <p class="mt-3 text-center">Already have an account? <a href="/login">Login</a></p>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+        <p class="mt-3 text-center">No account? <a href="/register">Register</a></p>
     </form>
 </body>
 </html>
