@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -15,7 +14,17 @@ public class UserServlet {
     @Autowired
     private UserService userService;
 
-    // --- Register ---
+    // Home (guest access)
+    @GetMapping("/home")
+    public String home(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+        return "home";
+    }
+
+    // Register
     @GetMapping("/register")
     public String showRegister() {
         return "register";
@@ -37,7 +46,7 @@ public class UserServlet {
         return "register";
     }
 
-    // --- Login ---
+    // Login
     @GetMapping("/login")
     public String showLogin() {
         return "login";
@@ -51,13 +60,13 @@ public class UserServlet {
         User user = userService.login(email, password);
         if (user != null) {
             session.setAttribute("loggedInUser", user);
-            return "redirect:/profile";
+            return "redirect:/home";
         }
         model.addAttribute("error", "Invalid email or password.");
         return "login";
     }
 
-    // --- Profile ---
+    // Profile (need to be logged in)
     @GetMapping("/profile")
     public String profile(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
@@ -66,7 +75,7 @@ public class UserServlet {
         return "profile";
     }
 
-    // --- Logout ---
+    // Logout
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
