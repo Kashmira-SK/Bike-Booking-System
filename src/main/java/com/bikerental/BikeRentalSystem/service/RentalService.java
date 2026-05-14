@@ -3,6 +3,7 @@ package com.bikerental.BikeRentalSystem.service;
 import com.bikerental.BikeRentalSystem.model.*;
 import com.bikerental.BikeRentalSystem.util.AppConstants;
 import com.bikerental.BikeRentalSystem.util.FileHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,11 +14,16 @@ import java.util.List;
 @Service
 public class RentalService {
 
-    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter FMT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    @Autowired
+    private ExtraService extraService;
 
     private Rental parseLine(String line) {
         String[] p = line.split("\\" + AppConstants.SEP);
-        if (p.length < 10) return null;
+        if (p.length < 12) return null;
+
         String id           = p[0];
         String userId       = p[1];
         String bikeId       = p[2];
@@ -28,30 +34,32 @@ public class RentalService {
         double cost         = Double.parseDouble(p[7]);
         String status       = p[8];
         String type         = p[9];
+        String extrasIds    = p[10];
+        double extrasCost   = Double.parseDouble(p[11]);
 
         if (AppConstants.RENTAL_HOURLY.equals(type)) {
-            return new HourlyRental(id, userId, bikeId, startStation, endStation, startTime, endTime, cost, status);
+            return new HourlyRental(id, userId, bikeId, startStation, endStation,
+                    startTime, endTime, cost, status, extrasIds, extrasCost);
         } else {
-            return new DailyRental(id, userId, bikeId, startStation, endStation, startTime, endTime, cost, status);
+            return new DailyRental(id, userId, bikeId, startStation, endStation,
+                    startTime, endTime, cost, status, extrasIds, extrasCost);
         }
     }
 
-    // Read bike's pricePerHour directly from bikes.txt
     private double getBikePrice(String bikeId) {
         String line = FileHelper.findById(AppConstants.BIKES_FILE, bikeId);
         if (line == null) return 0;
         String[] p = line.split("\\" + AppConstants.SEP);
-        return p.length >= 4 ? Double.parseDouble(p[3]) : 0;
+        return p.length >= 5 ? Double.parseDouble(p[4]) : 0;   // index 4 = pricePerHour
     }
 
-    // Set bike status directly in bikes.txt
     private void setBikeStatus(String bikeId, String status) {
-        List<String> lines = FileHelper.readAll(AppConstants.BIKES_FILE);
+        List<String> lines  = FileHelper.readAll(AppConstants.BIKES_FILE);
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             String[] p = line.split("\\" + AppConstants.SEP);
-            if (p[0].equals(bikeId) && p.length >= 6) {
-                p[5] = status;
+            if (p[0].equals(bikeId) && p.length >= 7) {
+                p[6] = status;                                   // index 6 = status
                 result.add(String.join(AppConstants.SEP, p));
             } else {
                 result.add(line);
@@ -82,21 +90,43 @@ public class RentalService {
         return line != null ? parseLine(line) : null;
     }
 
-    public boolean rentBike(String userId, String bikeId, String startStation, String endStation, String type) {
-        // Check bike is available
+    public boolean rentBike(String userId, String bikeId,
+                            String startStation, String endStation,
+                            String type, List<String> selectedExtraIds) {
+
         String bikeLine = FileHelper.findById(AppConstants.BIKES_FILE, bikeId);
         if (bikeLine == null) return false;
-        String[] p = bikeLine.split("\\" + AppConstants.SEP);
-        if (!AppConstants.BIKE_AVAILABLE.equals(p[5])) return false;
+        String[] bp = bikeLine.split("\\" + AppConstants.SEP);
+        if (bp.length < 7 || !AppConstants.BIKE_AVAILABLE.equals(bp[6])) return false;
+
+        double extrasCost = 0.0;
+        String extrasIds  = "";
+        if (selectedExtraIds != null && !selectedExtraIds.isEmpty()) {
+            List<String> validIds = new ArrayList<>();
+            for (String eid : selectedExtraIds) {
+                Extra extra = extraService.findById(eid);
+                if (extra != null) {
+                    validIds.add(eid);
+                    if (!extra.isIncluded()) {
+                        extrasCost += extra.getPricePerRental();
+                    }
+                }
+            }
+            extrasIds = String.join(",", validIds);
+        }
 
         String id        = FileHelper.generateId();
         String startTime = LocalDateTime.now().format(FMT);
 
         Rental rental;
         if (AppConstants.RENTAL_HOURLY.equals(type)) {
-            rental = new HourlyRental(id, userId, bikeId, startStation, endStation, startTime, "", 0, AppConstants.RENTAL_ACTIVE);
+            rental = new HourlyRental(id, userId, bikeId, startStation, endStation,
+                    startTime, "", 0, AppConstants.RENTAL_ACTIVE,
+                    extrasIds, extrasCost);
         } else {
-            rental = new DailyRental(id, userId, bikeId, startStation, endStation, startTime, "", 0, AppConstants.RENTAL_ACTIVE);
+            rental = new DailyRental(id, userId, bikeId, startStation, endStation,
+                    startTime, "", 0, AppConstants.RENTAL_ACTIVE,
+                    extrasIds, extrasCost);
         }
 
         boolean saved = FileHelper.append(AppConstants.RENTALS_FILE, rental.toFileString());
@@ -112,31 +142,28 @@ public class RentalService {
         rental.setEndTime(endTime);
         rental.setStatus(AppConstants.RENTAL_COMPLETED);
 
-        double price = getBikePrice(rental.getBikeId());
-        double cost  = rental.calculateCost(price);
-        rental.setCost(cost);
+        double bikePrice = getBikePrice(rental.getBikeId());
+        double baseCost  = rental.calculateCost(bikePrice);
+        double totalCost = baseCost + rental.getExtrasCost();
+        rental.setCost(totalCost);
 
-        // Update rental record
-        List<String> lines = FileHelper.readAll(AppConstants.RENTALS_FILE);
+        List<String> lines  = FileHelper.readAll(AppConstants.RENTALS_FILE);
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             String[] p = line.split("\\" + AppConstants.SEP);
-            if (p[0].equals(rentalId)) {
-                result.add(rental.toFileString());
-            } else {
-                result.add(line);
-            }
+            result.add(p[0].equals(rentalId) ? rental.toFileString() : line);
         }
         FileHelper.writeAll(AppConstants.RENTALS_FILE, result);
         setBikeStatus(rental.getBikeId(), AppConstants.BIKE_AVAILABLE);
-        return cost;
+        return totalCost;
     }
 
     public boolean cancel(String rentalId) {
         Rental rental = findById(rentalId);
         if (rental == null || !rental.isActive()) return false;
+
         rental.setStatus(AppConstants.RENTAL_CANCELLED);
-        List<String> lines = FileHelper.readAll(AppConstants.RENTALS_FILE);
+        List<String> lines  = FileHelper.readAll(AppConstants.RENTALS_FILE);
         List<String> result = new ArrayList<>();
         for (String line : lines) {
             String[] p = line.split("\\" + AppConstants.SEP);
