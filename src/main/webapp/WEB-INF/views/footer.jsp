@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <footer style="
     background: rgba(10, 25, 15, 0.85);
     border-top: 1px solid rgba(255,255,255,0.10);
@@ -54,15 +53,15 @@
                     Legal
                 </p>
                 <ul class="list-unstyled mb-0" style="font-size:0.88rem;">
-                    <li class="mb-1"><a href="#"
+                    <li class="mb-1"><a href="${pageContext.request.contextPath}/terms"
                         style="color:rgba(255,255,255,0.65); text-decoration:none;"
                         onmouseover="this.style.color='#52b788'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">
                         Terms of Service</a></li>
-                    <li class="mb-1"><a href="#"
+                    <li class="mb-1"><a href="${pageContext.request.contextPath}/privacy"
                         style="color:rgba(255,255,255,0.65); text-decoration:none;"
                         onmouseover="this.style.color='#52b788'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">
                         Privacy Policy</a></li>
-                    <li><a href="#"
+                    <li><a href="${pageContext.request.contextPath}/contact"
                         style="color:rgba(255,255,255,0.65); text-decoration:none;"
                         onmouseover="this.style.color='#52b788'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">
                         Cookie Policy</a></li>

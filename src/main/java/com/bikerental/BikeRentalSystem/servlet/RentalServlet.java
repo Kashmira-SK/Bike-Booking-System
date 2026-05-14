@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/rentals")
@@ -58,7 +59,7 @@ public class RentalServlet {
                            Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
-        boolean success = rentalService.rentBike(user.getId(), bikeId, startStation, endStation, type);
+        boolean success = rentalService.rentBike(user.getId(), bikeId, startStation, endStation, type, new ArrayList<>());
         if (success) return "redirect:/rentals/history";
         model.addAttribute("error", "Could not rent bike. It may no longer be available.");
         model.addAttribute("availableBikes", bikeService.findAvailable());
