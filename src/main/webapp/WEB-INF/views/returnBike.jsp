@@ -1,9 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="navbar.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="container" style="max-width: 520px;">
-    <div class="page-header">
-        <h2><i class="bi bi-arrow-return-left"></i> Return Bike</h2>
-    </div>
+
+<div class="container py-4" style="max-width:540px">
+    <h2 class="fw-bold mb-4"><i class="bi bi-arrow-return-left me-2"></i>Return Bike</h2>
 
     <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
@@ -11,7 +11,7 @@
 
     <c:if test="${not empty rental}">
         <div class="card mb-4">
-            <div class="card-header bg-dark text-white">Rental Details</div>
+            <div class="card-header fw-semibold"><i class="bi bi-info-circle me-2"></i>Rental Details</div>
             <div class="card-body">
                 <table class="table table-sm mb-0">
                     <tr><th>Rental ID</th><td>${rental.id}</td></tr>
@@ -27,7 +27,7 @@
                 <input type="hidden" name="rentalId" value="${rental.id}">
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-warning flex-grow-1">
-                        <i class="bi bi-arrow-return-left"></i> Confirm Return
+                        <i class="bi bi-arrow-return-left me-1"></i>Confirm Return
                     </button>
                     <a href="/rentals/history" class="btn btn-outline-secondary">Back</a>
                 </div>
@@ -39,7 +39,7 @@
         <div class="card p-4">
             <form action="/rentals/return" method="post">
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Rental ID</label>
+                    <label class="form-label">Rental ID</label>
                     <input type="text" name="rentalId" class="form-control" required>
                 </div>
                 <button type="submit" class="btn btn-warning w-100">Return Bike</button>
@@ -47,5 +47,5 @@
         </div>
     </c:if>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body></html>
+
+<%@ include file="footer.jsp" %>

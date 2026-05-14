@@ -1,66 +1,58 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Manage Stations</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="navbar.jsp" %>
-<div class="container">
+
+<div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Manage Stations</h2>
-        <div>
-            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addStationModal">
-                + Add Station
+        <h2 class="fw-bold mb-0">Manage Stations</h2>
+        <div class="d-flex gap-2">
+            <button class="btn btn-green btn-sm" data-bs-toggle="modal" data-bs-target="#addStationModal">
+                <i class="bi bi-plus-lg me-1"></i>Add Station
             </button>
-            <a href="/admin" class="btn btn-outline-secondary btn-sm ms-2">← Dashboard</a>
+            <a href="/admin" class="btn btn-outline-secondary btn-sm">← Dashboard</a>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover bg-white align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>Type</th>
-                    <th>Capacity</th>
-                    <th>Bikes</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="s" items="${stations}">
-                    <tr>
-                        <td>${s.name}</td>
-                        <td>${s.address}</td>
-                        <td>${s.city}</td>
-                        <td>${s.type}</td>
-                        <td>${s.capacity}</td>
-                        <td>${s.bikeCount}</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editModal${s.id}">Edit</button>
-                            <form action="/admin/stations/delete/${s.id}" method="post" class="d-inline ms-1"
-                                  onsubmit="return confirm('Delete station ${s.name}?')">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-                <c:if test="${empty stations}">
-                    <tr><td colspan="7" class="text-center text-muted">No stations found.</td></tr>
-                </c:if>
-            </tbody>
-        </table>
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th><th>Address</th><th>City</th>
+                            <th>Type</th><th>Capacity</th><th>Bikes</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="s" items="${stations}">
+                            <tr>
+                                <td>${s.name}</td>
+                                <td>${s.address}</td>
+                                <td>${s.city}</td>
+                                <td>${s.type}</td>
+                                <td>${s.capacity}</td>
+                                <td>${s.bikeCount}</td>
+                                <td>
+                                    <button class="btn btn-green btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#editModal${s.id}">Edit</button>
+                                    <form action="/admin/stations/delete/${s.id}" method="post" class="d-inline ms-1"
+                                          onsubmit="return confirm('Delete station ${s.name}?')">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        <c:if test="${empty stations}">
+                            <tr><td colspan="7" class="text-center text-muted py-4">No stations found.</td></tr>
+                        </c:if>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
-<%-- Edit modals (outside table to keep valid HTML) --%>
+<%-- Edit modals --%>
 <c:forEach var="s" items="${stations}">
     <div class="modal fade" id="editModal${s.id}" tabindex="-1">
         <div class="modal-dialog">
@@ -96,8 +88,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-green">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -140,14 +132,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Add Station</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-green">Add Station</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<%@ include file="footer.jsp" %>

@@ -1,25 +1,31 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Receipt</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="container mt-4" style="max-width: 480px;">
-    <div class="alert alert-success">
-        <h4>Payment Successful!</h4>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ include file="navbar.jsp" %>
+
+<div class="container py-4 d-flex justify-content-center">
+    <div style="width:100%;max-width:500px">
+        <div class="alert alert-success mb-4">
+            <h4 class="mb-0"><i class="bi bi-check-circle-fill me-2"></i>Payment Successful!</h4>
+        </div>
+
+        <div class="card">
+            <div class="card-header fw-semibold"><i class="bi bi-receipt me-2"></i>Receipt</div>
+            <div class="card-body">
+                <table class="table table-sm mb-0">
+                    <tr><th>Payment ID</th><td>${payment.id}</td></tr>
+                    <tr><th>Rental ID</th><td>${payment.rentalId}</td></tr>
+                    <tr><th>Amount</th><td class="fw-bold" style="color:#74c69d;">$${payment.amount}</td></tr>
+                    <tr><th>Method</th><td>${payment.paymentMethod}</td></tr>
+                    <tr><th>Status</th><td>${payment.status}</td></tr>
+                    <tr><th>Timestamp</th><td>${payment.timestamp}</td></tr>
+                </table>
+            </div>
+            <div class="card-footer d-flex gap-2">
+                <a href="/rentals/history" class="btn btn-green flex-grow-1">My Rentals</a>
+                <a href="/payments/history" class="btn btn-outline-secondary">Payment History</a>
+            </div>
+        </div>
     </div>
+</div>
 
-    <table class="table table-bordered">
-        <tr><th>Payment ID</th><td>${payment.id}</td></tr>
-        <tr><th>Rental ID</th><td>${payment.rentalId}</td></tr>
-        <tr><th>Amount</th><td>$${payment.amount}</td></tr>
-        <tr><th>Method</th><td>${payment.paymentMethod}</td></tr>
-        <tr><th>Status</th><td>${payment.status}</td></tr>
-        <tr><th>Timestamp</th><td>${payment.timestamp}</td></tr>
-    </table>
-
-    <a href="/rentals/history" class="btn btn-primary">My Rentals</a>
-    <a href="/payments/history" class="btn btn-secondary ms-2">Payment History</a>
-</body>
-</html>
+<%@ include file="footer.jsp" %>

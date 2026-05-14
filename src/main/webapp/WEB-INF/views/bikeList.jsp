@@ -1,9 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="navbar.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="container">
-    <div class="page-header d-flex justify-content-between align-items-center">
-        <h2><i class="bi bi-bicycle"></i> Bikes</h2>
-        <a href="/bikes/add" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add Bike</a>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-bicycle me-2"></i>Bikes</h2>
+        <a href="/bikes/add" class="btn btn-green"><i class="bi bi-plus-lg me-1"></i>Add Bike</a>
     </div>
 
     <c:if test="${empty bikes}">
@@ -17,28 +19,31 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <h5 class="card-title mb-0">${b.model}</h5>
-                            <span class="badge ${b.status == 'AVAILABLE' ? 'bg-success' : b.status == 'RENTED' ? 'bg-warning text-dark' : 'bg-secondary'}">
+                            <span class="badge ${b.status == 'AVAILABLE' ? 'bg-success' : b.status == 'RENTED' ? 'bg-warning' : 'bg-secondary'}">
                                 ${b.status}
                             </span>
                         </div>
-                        <p class="text-muted mb-1"><i class="bi bi-tag"></i> ${b.bikeType}</p>
-                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i>
+                        <p class="text-muted mb-1"><i class="bi bi-tag me-1"></i>${b.bikeType}</p>
+                        <p class="text-muted mb-1">
+                            <i class="bi bi-geo-alt me-1"></i>
                             <c:choose>
                                 <c:when test="${not empty stationNames[b.stationId]}">${stationNames[b.stationId]}</c:when>
                                 <c:otherwise>Unknown Station</c:otherwise>
                             </c:choose>
                         </p>
-                        <p class="fw-bold text-success fs-5 mt-2">$${b.pricePerHour}/hr</p>
+                        <p class="fw-bold fs-5 mt-2" style="color:#74c69d;">$${b.pricePerHour}/hr</p>
                     </div>
-                    <div class="card-footer bg-transparent d-flex gap-2">
-                        <c:if test="${b.status == 'AVAILABLE'}">
-                            <a href="/rentals/rent?bikeId=${b.id}" class="btn btn-primary flex-grow-1">
-                                <i class="bi bi-key"></i> Rent This Bike
-                            </a>
-                        </c:if>
-                        <c:if test="${b.status != 'AVAILABLE'}">
-                            <button class="btn btn-secondary flex-grow-1" disabled>Unavailable</button>
-                        </c:if>
+                    <div class="card-footer d-flex gap-2">
+                        <c:choose>
+                            <c:when test="${b.status == 'AVAILABLE'}">
+                                <a href="/rentals/rent?bikeId=${b.id}" class="btn btn-green flex-grow-1">
+                                    <i class="bi bi-key me-1"></i>Rent This Bike
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <button class="btn btn-secondary flex-grow-1" disabled>Unavailable</button>
+                            </c:otherwise>
+                        </c:choose>
                         <a href="/bikes/edit/${b.id}" class="btn btn-outline-secondary">
                             <i class="bi bi-pencil"></i>
                         </a>
@@ -54,5 +59,5 @@
         </c:forEach>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body></html>
+
+<%@ include file="footer.jsp" %>
