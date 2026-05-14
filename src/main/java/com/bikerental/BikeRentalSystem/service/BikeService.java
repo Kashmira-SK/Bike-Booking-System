@@ -13,19 +13,28 @@ public class BikeService {
 
     private Bike parseLine(String line) {
         String[] p = line.split("\\" + AppConstants.SEP);
-        if (p.length < 6) return null;
-        String id          = p[0];
-        String type        = p[1];
-        String model       = p[2];
-        double pricePerHour = Double.parseDouble(p[3]);
-        String stationId   = p[4];
-        String status      = p[5];
+        if (p.length < 9) return null;
+
+        String id           = p[0];
+        String sellerId     = p[1];
+        String type         = p[2];
+        String model        = p[3];
+        double pricePerHour = Double.parseDouble(p[4]);
+        String stationId    = p[5];
+        String status       = p[6];
+        String imageUrl     = p[7];
+
+        String description  = p[8];
 
         switch (type) {
-            case "MOUNTAIN": return new MountainBike(id, model, pricePerHour, stationId, status);
-            case "ROAD":     return new RoadBike(id, model, pricePerHour, stationId, status);
-            case "ELECTRIC": return new ElectricBike(id, model, pricePerHour, stationId, status);
-            default:         return null;
+            case "MOUNTAIN":
+                return new MountainBike(id, sellerId, model, pricePerHour, stationId, status, imageUrl, description);
+            case "ROAD":
+                return new RoadBike(id, sellerId, model, pricePerHour, stationId, status, imageUrl, description);
+            case "ELECTRIC":
+                return new ElectricBike(id, sellerId, model, pricePerHour, stationId, status, imageUrl, description);
+            default:
+                return null;
         }
     }
 
@@ -51,6 +60,14 @@ public class BikeService {
         return result;
     }
 
+    public List<Bike> findBySeller(String sellerId) {
+        List<Bike> result = new ArrayList<>();
+        for (Bike b : readAll()) {
+            if (b.getSellerId().equals(sellerId)) result.add(b);
+        }
+        return result;
+    }
+
     public List<Bike> findAvailable() {
         List<Bike> result = new ArrayList<>();
         for (Bike b : readAll()) {
@@ -59,14 +76,42 @@ public class BikeService {
         return result;
     }
 
-    public boolean create(String type, String model, double pricePerHour, String stationId) {
+    /**
+     * Creates and persists a new bike.
+     *
+     * @param sellerId    userId of the seller, or "ADMIN" for admin-added bikes
+     * @param type        MOUNTAIN | ROAD | ELECTRIC
+     * @param model       model name
+     * @param pricePerHour hourly rate
+     * @param stationId   station the bike belongs to
+     * @param imageUrl    URL string, may be empty
+     * @param description short text (no pipe characters)
+     */
+    public boolean create(String sellerId, String type, String model,
+                          double pricePerHour, String stationId,
+                          String imageUrl, String description) {
         String id = FileHelper.generateId();
+        // Sanitise: descriptions must not contain the separator
+        String safeDesc = description == null ? "" : description.replace("|", "-");
+        String safeImg  = imageUrl    == null ? "" : imageUrl;
+        String safeSelr = sellerId    == null ? "ADMIN" : sellerId;
+
         Bike bike;
         switch (type) {
-            case "MOUNTAIN": bike = new MountainBike(id, model, pricePerHour, stationId, AppConstants.BIKE_AVAILABLE); break;
-            case "ROAD":     bike = new RoadBike(id, model, pricePerHour, stationId, AppConstants.BIKE_AVAILABLE); break;
-            case "ELECTRIC": bike = new ElectricBike(id, model, pricePerHour, stationId, AppConstants.BIKE_AVAILABLE); break;
-            default: return false;
+            case "MOUNTAIN":
+                bike = new MountainBike(id, safeSelr, model, pricePerHour, stationId,
+                        AppConstants.BIKE_AVAILABLE, safeImg, safeDesc);
+                break;
+            case "ROAD":
+                bike = new RoadBike(id, safeSelr, model, pricePerHour, stationId,
+                        AppConstants.BIKE_AVAILABLE, safeImg, safeDesc);
+                break;
+            case "ELECTRIC":
+                bike = new ElectricBike(id, safeSelr, model, pricePerHour, stationId,
+                        AppConstants.BIKE_AVAILABLE, safeImg, safeDesc);
+                break;
+            default:
+                return false;
         }
         return FileHelper.append(AppConstants.BIKES_FILE, bike.toFileString());
     }
@@ -79,7 +124,7 @@ public class BikeService {
     }
 
     public boolean update(Bike updated) {
-        List<String> lines = FileHelper.readAll(AppConstants.BIKES_FILE);
+        List<String> lines  = FileHelper.readAll(AppConstants.BIKES_FILE);
         List<String> result = new ArrayList<>();
         boolean found = false;
         for (String line : lines) {
