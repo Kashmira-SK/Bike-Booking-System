@@ -7,18 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * Stateless helper for role-based access control in servlets.
- *
- * Usage pattern:
- *   if (!AccessControlUtil.requireLogin(request, response))                  return;
- *   if (!AccessControlUtil.requireRole(AppConstants.ROLE_ADMIN, req, res))   return;
- *   if (!AccessControlUtil.requireAdmin(request, response))                   return;
- *   if (!AccessControlUtil.requireSellerOrAdmin(request, response))           return;
- *
- * Every guard writes the flash-error to the session before redirecting,
- * so navbar.jsp displays the banner automatically on the next page.
- */
 public final class AccessControlUtil {
 
     private AccessControlUtil() {}
