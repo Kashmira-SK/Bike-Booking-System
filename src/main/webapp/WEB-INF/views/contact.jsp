@@ -40,7 +40,7 @@
                         <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
                         <div>
                             <div class="fw-semibold mb-1">Our address</div>
-                            <div class="text-muted small">42 Greenway Boulevard, Suite 101<br>Springfield, CA 94102</div>
+                            <div class="text-muted small">20 Main Road, Kandy, Sri Lanka<br>Springfield, CA 94102</div>
                         </div>
                     </div>
                 </div>
