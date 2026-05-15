@@ -71,7 +71,7 @@
 
         <hr style="border-color:rgba(255,255,255,0.10); margin:1.2rem 0 0.8rem;">
         <p style="text-align:center; font-size:0.78rem; color:rgba(255,255,255,0.35); margin:0;">
-            &copy; 2025 BikeRental. All rights reserved.
+            &copy; 2026 OOP Project BikeRental. SKU Group 44. All rights reserved.
         </p>
     </div>
 </footer>
