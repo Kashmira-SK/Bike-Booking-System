@@ -31,7 +31,7 @@
             <input type="text" name="phone" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary w-100">Register</button>
-        
+        <p class="mt-3 text-center">Already have an account? <a href="/login">Login</a></p>
     </form>
 </body>
 </html>
