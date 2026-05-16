@@ -4,3 +4,4 @@ U003|Regular User|user@bikerental.com|user123|0760000000|REGULAR|ACTIVE
 1778516083076|Kashmira|kashmirakalupahana@gmail.com|123test|0725630835|REGULAR|ACTIVE
 1778577674168|kash|kash@me.me|123123|123456789|REGULAR|ACTIVE
 1778751726824|Kashmira|kashmira_r@proton.me|Xj5^sb!gYCNEHtBq$SQ4|0725630835|REGULAR|ACTIVE
+1778938427265|HesalaNormalUser|hesala@he.com|D5Aze3x$jtn#*Ypn$60V|011 111 111111|SELLER|ACTIVE
