@@ -1,17 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="navbar.jsp" %>
-
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold mb-0"><i class="bi bi-bicycle me-2"></i>Bikes</h2>
-        <a href="/bikes/add" class="btn btn-green"><i class="bi bi-plus-lg me-1"></i>Add Bike</a>
+        <c:if test="${not empty sessionScope.loggedInUser and
+            (sessionScope.loggedInUser.role == 'ADMIN' or sessionScope.loggedInUser.role == 'SELLER')}">
+            <a href="/bikes/add" class="btn btn-green"><i class="bi bi-plus-lg me-1"></i>Add Bike</a>
+        </c:if>
     </div>
-
     <c:if test="${empty bikes}">
         <div class="card p-5 text-center text-muted">No bikes found. Add one to get started.</div>
     </c:if>
-
     <div class="row g-4">
         <c:forEach var="b" items="${bikes}">
             <div class="col-md-4">
@@ -44,20 +44,23 @@
                                 <button class="btn btn-secondary flex-grow-1" disabled>Unavailable</button>
                             </c:otherwise>
                         </c:choose>
-                        <a href="/bikes/edit/${b.id}" class="btn btn-outline-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="/bikes/delete/${b.id}" method="post" class="d-inline"
-                              onsubmit="return confirm('Delete this bike?')">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
+                        <c:if test="${not empty sessionScope.loggedInUser and
+                            (sessionScope.loggedInUser.role == 'ADMIN' or
+                             sessionScope.loggedInUser.id == b.sellerId)}">
+                            <a href="/bikes/edit/${b.id}" class="btn btn-outline-secondary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form action="/bikes/delete/${b.id}" method="post" class="d-inline"
+                                  onsubmit="return confirm('Delete this bike?')">
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </c:if>
                     </div>
                 </div>
             </div>
         </c:forEach>
     </div>
 </div>
-
 <%@ include file="footer.jsp" %>
