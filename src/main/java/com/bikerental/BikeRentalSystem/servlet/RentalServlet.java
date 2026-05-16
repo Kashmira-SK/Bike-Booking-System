@@ -45,7 +45,7 @@ public class RentalServlet {
         if (bikeId != null) {
             model.addAttribute("selectedBike", bikeService.findById(bikeId));
         }
-        model.addAttribute("availableBikes", bikeService.findAvailable());
+        model.addAttribute("availableBikes", bikeService.findAvailableSorted());
         model.addAttribute("stations", stationService.readAll());
         return "rentBike";
     }
@@ -62,7 +62,7 @@ public class RentalServlet {
         boolean success = rentalService.rentBike(user.getId(), bikeId, startStation, endStation, type, new ArrayList<>());
         if (success) return "redirect:/rentals/history";
         model.addAttribute("error", "Could not rent bike. It may no longer be available.");
-        model.addAttribute("availableBikes", bikeService.findAvailable());
+        model.addAttribute("availableBikes", bikeService.findAvailableSorted());
         model.addAttribute("stations", stationService.readAll());
         return "rentBike";
     }
