@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-
 
 @Controller
 @RequestMapping("/rentals")
@@ -18,7 +16,6 @@ public class RentalServlet {
     @Autowired private BikeService bikeService;
     @Autowired private StationService stationService;
 
-    // Admin/overview — login needed
     @GetMapping
     public String allRentals(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
@@ -27,7 +24,6 @@ public class RentalServlet {
         return "allRentals";
     }
 
-    // Login needed
     @GetMapping("/history")
     public String history(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
@@ -36,11 +32,9 @@ public class RentalServlet {
         return "rentalHistory";
     }
 
-    // Login needed
     @GetMapping("/rent")
     public String showRentForm(@RequestParam(required = false) String bikeId,
-                               HttpSession session,
-                               Model model) {
+                               HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
         if (bikeId != null) {
@@ -56,11 +50,10 @@ public class RentalServlet {
                            @RequestParam String startStation,
                            @RequestParam String endStation,
                            @RequestParam String type,
-                           HttpSession session,
-                           Model model) {
+                           HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
-        boolean success = rentalService.rentBike(user.getId(), bikeId, startStation, endStation, type, new ArrayList<>());
+        boolean success = rentalService.rentBike(user.getId(), bikeId, startStation, endStation, type);
         if (success) return "redirect:/rentals/history";
         model.addAttribute("error", "Could not rent bike. It may no longer be available.");
         model.addAttribute("availableBikes", bikeService.findAvailableSorted());
@@ -68,11 +61,9 @@ public class RentalServlet {
         return "rentBike";
     }
 
-    // Login needed
     @GetMapping("/return")
     public String showReturnForm(@RequestParam(required = false) String rentalId,
-                                 HttpSession session,
-                                 Model model) {
+                                 HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
         if (rentalId != null) {
@@ -83,8 +74,7 @@ public class RentalServlet {
 
     @PostMapping("/return")
     public String returnBike(@RequestParam String rentalId,
-                             HttpSession session,
-                             Model model) {
+                             HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
         double cost = rentalService.returnBike(rentalId);

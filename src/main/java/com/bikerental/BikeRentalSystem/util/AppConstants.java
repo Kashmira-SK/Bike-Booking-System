@@ -12,7 +12,6 @@ public class AppConstants {
     public static final String PAYMENTS_FILE    = "data/payments.txt";
     public static final String REVIEWS_FILE     = "data/reviews.txt";
     public static final String SELLERS_FILE     = "data/sellers.txt";
-    public static final String EXTRAS_FILE      = "data/extras.txt";
     public static final String SEP              = "|";
 
     // ── Bike status ──────────────────────────────────────────────────────────

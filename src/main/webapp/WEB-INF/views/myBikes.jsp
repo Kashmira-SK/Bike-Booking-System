@@ -33,35 +33,12 @@
                                     <h5 class="card-title mb-0">${bike.model}</h5>
                                     <span class="badge ${bike.status == 'AVAILABLE' ? 'bg-success' : 'bg-danger'}">${bike.status}</span>
                                 </div>
-                                <p class="text-muted small text-uppercase mb-1">${bike.type}</p>
+                                <p class="text-muted small text-uppercase mb-1">${bike.bikeType}</p>
                                 <p class="fw-semibold mb-2" style="color:#74c69d;">
                                     Rs. <fmt:formatNumber value="${bike.pricePerHour}" pattern="#,##0.00"/> / hr
                                 </p>
                                 <c:if test="${not empty bike.description}">
                                     <p class="card-text small text-muted">${bike.description}</p>
-                                </c:if>
-
-                                <c:set var="extras" value="${extrasMap[bike.id]}"/>
-                                <c:if test="${not empty extras}">
-                                    <hr>
-                                    <p class="small fw-semibold mb-1">Extras</p>
-                                    <ul class="list-unstyled mb-0">
-                                        <c:forEach var="extra" items="${extras}">
-                                            <li class="small mb-1">
-                                                <c:choose>
-                                                    <c:when test="${extra.included}">
-                                                        <span class="badge bg-secondary me-1">Free</span>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <span class="badge bg-warning me-1">
-                                                            +Rs.<fmt:formatNumber value="${extra.pricePerRental}" pattern="#,##0.00"/>
-                                                        </span>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                ${extra.name}
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
                                 </c:if>
                             </div>
                             <div class="card-footer d-flex gap-2">
