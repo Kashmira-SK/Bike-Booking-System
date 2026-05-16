@@ -16,7 +16,7 @@
                 <table class="table table-sm mb-0">
                     <tr><th>Rental ID</th><td>${rental.id}</td></tr>
                     <tr><th>Bike</th><td>${rental.bikeId}</td></tr>
-                    <tr><th>Type</th><td>${rental.type}</td></tr>
+                    <tr><th>Type</th><td>${rental.rentalType}</td></tr>
                     <tr><th>Duration</th><td>${rental.startTime} → ${rental.endTime}</td></tr>
                     <tr>
                         <th>Total</th>

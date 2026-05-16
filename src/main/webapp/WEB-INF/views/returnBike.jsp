@@ -16,7 +16,7 @@
                 <table class="table table-sm mb-0">
                     <tr><th>Rental ID</th><td>${rental.id}</td></tr>
                     <tr><th>Bike</th><td>${rental.bikeId}</td></tr>
-                    <tr><th>Type</th><td>${rental.type}</td></tr>
+                    <tr><th>Type</th><td>${rental.rentalType}</td></tr>
                     <tr><th>Started</th><td>${rental.startTime}</td></tr>
                 </table>
             </div>
