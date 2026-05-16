@@ -36,7 +36,7 @@ public class RentalService {
     private ExtraService extraService;
 
     private Rental parseLine(String line) {
-        String[] p = line.split("\\" + AppConstants.SEP);
+        String[] p = line.split("\\" + AppConstants.SEP, -1);
         if (p.length < 12) return null;
 
         String id           = p[0];
@@ -64,7 +64,7 @@ public class RentalService {
     private double getBikePrice(String bikeId) {
         String line = FileHelper.findById(AppConstants.BIKES_FILE, bikeId);
         if (line == null) return 0;
-        String[] p = line.split("\\" + AppConstants.SEP);
+        String[] p = line.split("\\" + AppConstants.SEP, -1);
         return p.length >= 5 ? Double.parseDouble(p[4]) : 0;   // index 4 = pricePerHour
     }
 
@@ -72,7 +72,7 @@ public class RentalService {
         List<String> lines  = FileHelper.readAll(AppConstants.BIKES_FILE);
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            String[] p = line.split("\\" + AppConstants.SEP);
+            String[] p = line.split("\\" + AppConstants.SEP, -1);
             if (p[0].equals(bikeId) && p.length >= 7) {
                 p[6] = status;                                   // index 6 = status
                 result.add(String.join(AppConstants.SEP, p));
@@ -167,7 +167,7 @@ public class RentalService {
         List<String> lines  = FileHelper.readAll(AppConstants.RENTALS_FILE);
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            String[] p = line.split("\\" + AppConstants.SEP);
+            String[] p = line.split("\\" + AppConstants.SEP, -1);
             result.add(p[0].equals(rentalId) ? rental.toFileString() : line);
         }
         FileHelper.writeAll(AppConstants.RENTALS_FILE, result);
@@ -183,7 +183,7 @@ public class RentalService {
         List<String> lines  = FileHelper.readAll(AppConstants.RENTALS_FILE);
         List<String> result = new ArrayList<>();
         for (String line : lines) {
-            String[] p = line.split("\\" + AppConstants.SEP);
+            String[] p = line.split("\\" + AppConstants.SEP, -1);
             result.add(p[0].equals(rentalId) ? rental.toFileString() : line);
         }
         FileHelper.writeAll(AppConstants.RENTALS_FILE, result);

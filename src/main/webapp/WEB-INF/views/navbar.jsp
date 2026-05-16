@@ -174,6 +174,7 @@
         .table-secondary thead th { background: rgba(82, 183, 136, 0.15) !important; }
         .table tbody tr { border-color: rgba(255, 255, 255, 0.10) !important; }
         .table tbody tr:hover { background: rgba(255, 255, 255, 0.07) !important; }
+        .table-hover > tbody > tr { background: transparent !important; }
         .table tbody td, .table tbody th { color: #ffffff !important; border-color: rgba(255,255,255,0.08) !important; }
         .table-striped > tbody > tr:nth-of-type(odd) > * {
             background: rgba(255, 255, 255, 0.05) !important;
