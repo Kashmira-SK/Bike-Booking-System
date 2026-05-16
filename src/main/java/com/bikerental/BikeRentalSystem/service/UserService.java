@@ -24,6 +24,10 @@ public class UserService {
 
         if (AppConstants.ROLE_ADMIN.equals(role)) {
             return new AdminUser(id, name, email, password, phone, status);
+        } else if (AppConstants.ROLE_SELLER.equals(role)) {
+            RegularUser u = new RegularUser(id, name, email, password, phone, status);
+            u.setRole(AppConstants.ROLE_SELLER);
+            return u;
         } else {
             return new RegularUser(id, name, email, password, phone, status);
         }
