@@ -10,12 +10,27 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 @Service
 public class RentalService {
+    private final Queue<String> rentalRequestQueue = new LinkedList<>();
 
     private static final DateTimeFormatter FMT =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public void enqueueRentalRequest(String bikeId) {
+        rentalRequestQueue.add(bikeId);
+    }
+
+    public String dequeueRentalRequest() {
+        return rentalRequestQueue.poll();
+    }
+
+    public Queue<String> getRentalRequestQueue() {
+        return rentalRequestQueue;
+    }
 
     @Autowired
     private ExtraService extraService;
@@ -90,9 +105,11 @@ public class RentalService {
         return line != null ? parseLine(line) : null;
     }
 
-    public boolean rentBike(String userId, String bikeId,
-                            String startStation, String endStation,
-                            String type, List<String> selectedExtraIds) {
+    public boolean rentBike(String userId, String bikeId, String startStation, String endStation, String type, List<String> selectedExtraIds) {
+
+        enqueueRentalRequest(bikeId);
+        String requestedBikeId = dequeueRentalRequest();
+        if (requestedBikeId == null || !requestedBikeId.equals(bikeId)) return false;
 
         String bikeLine = FileHelper.findById(AppConstants.BIKES_FILE, bikeId);
         if (bikeLine == null) return false;
