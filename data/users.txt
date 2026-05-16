@@ -1,3 +1,6 @@
+U001|Admin User|admin@bikerental.com|admin123|0771234567|ADMIN|ACTIVE
+U002|Sarah Seller|sarah@bikerental.com|seller123|0779876543|SELLER|ACTIVE
+U003|Regular User|user@bikerental.com|user123|0760000000|REGULAR|ACTIVE
 1778516083076|Kashmira|kashmirakalupahana@gmail.com|123test|0725630835|REGULAR|ACTIVE
 1778577674168|kash|kash@me.me|123123|123456789|REGULAR|ACTIVE
 1778751726824|Kashmira|kashmira_r@proton.me|Xj5^sb!gYCNEHtBq$SQ4|0725630835|REGULAR|ACTIVE

@@ -17,8 +17,22 @@
                     <input type="number" name="pricePerHour" class="form-control" step="0.01" value="${bike.pricePerHour}" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Station ID</label>
-                    <input type="text" name="stationId" class="form-control" value="${bike.stationId}" required>
+                    <label class="form-label">Image URL</label>
+                    <input type="text" name="imageUrl" class="form-control" value="${bike.imageUrl}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3">${bike.description}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Station</label>
+                    <select name="stationId" class="form-select" required>
+                        <c:forEach var="station" items="${stations}">
+                            <option value="${station.id}" ${bike.stationId == station.id ? 'selected' : ''}>
+                                ${station.name} — ${station.city}
+                            </option>
+                        </c:forEach>
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Status</label>

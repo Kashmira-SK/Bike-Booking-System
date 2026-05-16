@@ -1,0 +1,3 @@
+R001|U003|B003|5|Smooth ride, great condition. Loved it!|BIKE|2025-05-01 10:00:00
+R002|U003|B005|4|Electric assist made the hills so easy. Highly recommend.|BIKE|2025-05-03 14:30:00
+R003|U002|B001|5|My own bike, well maintained. Customers love it!|BIKE|2025-05-05 09:15:00

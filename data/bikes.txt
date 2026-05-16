@@ -1,0 +1,6 @@
+B001|U002|MOUNTAIN|Trek Marlin 5|3.50|S002|AVAILABLE|https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400|Great for hill trails
+B002|U002|MOUNTAIN|Giant Talon 3|3.00|S002|AVAILABLE|https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?w=400|Reliable hardtail MTB
+B003|U001|ROAD|Trek Domane AL2|2.50|S001|AVAILABLE|https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400|Smooth city roads
+B004|U001|ROAD|Giant Contend 3|2.00|S001|AVAILABLE|https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400|Lightweight road bike
+B005|U001|ELECTRIC|Specialized Turbo Vado|5.00|S001|AVAILABLE|https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=400|Pedal-assisted electric
+B006|U001|ELECTRIC|Giant E+2|4.50|S003|AVAILABLE|https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=400|Long range electric bike
