@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        /* =============================================
-           GLOBAL GLASSMORPHISM DESIGN SYSTEM
-        ============================================= */
 
         body {
             min-height: 100vh;
@@ -352,7 +349,7 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.loggedInUser}">
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/rentals/my">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/rentals/history">
                                 <i class="bi bi-calendar-check me-1"></i>My Rentals
                             </a>
                         </li>
