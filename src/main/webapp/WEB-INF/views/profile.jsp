@@ -133,7 +133,7 @@
                         <i class="bi bi-patch-check-fill fs-1 mb-3" style="color:#52b788;display:block;"></i>
                         <h5 class="fw-bold mb-1">You're a verified Seller</h5>
                         <p class="text-muted mb-4" style="font-size:.92rem;">Your seller account is active. Manage your listed bikes and track your earnings below.</p>
-                        <a href="${ctx}/bikes/my" class="btn btn-green fw-semibold px-4">
+                        <a href="${ctx}/bikes/mine" class="btn btn-green fw-semibold px-4">
                             <i class="bi bi-list-check me-2"></i>Manage My Bikes
                         </a>
                     </div>
@@ -193,7 +193,7 @@
             </div>
             <c:if test="${role == 'SELLER' or role == 'ADMIN'}">
                 <div class="col-sm-6 col-md-4">
-                    <a href="${ctx}/bikes/my" class="card text-decoration-none">
+                    <a href="${ctx}/bikes/mine" class="card text-decoration-none">
                         <div class="card-body d-flex align-items-center gap-3 p-3">
                             <div class="icon-circle ic-teal"><i class="bi bi-bicycle"></i></div>
                             <div>
