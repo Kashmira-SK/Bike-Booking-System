@@ -27,7 +27,7 @@
                                     <td>${r.id}</td>
                                     <td>${r.userId}</td>
                                     <td>${r.bikeId}</td>
-                                    <td>${r.type}</td>
+                                    <td>${r.rentalType}</td>
                                     <td>${r.startStation}</td>
                                     <td>${r.endStation}</td>
                                     <td>${r.startTime}</td>
