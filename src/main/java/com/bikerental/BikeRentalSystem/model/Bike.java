@@ -17,15 +17,15 @@ public abstract class Bike {
     public Bike(String id, String sellerId, String type, String model,
                 double pricePerHour, String stationId, String status,
                 String imageUrl, String description) {
-        this.id           = id;
-        this.sellerId     = sellerId;
-        this.type         = type;
-        this.model        = model;
+        this.id = id;
+        this.sellerId = sellerId;
+        this.type = type;
+        this.model = model;
         this.pricePerHour = pricePerHour;
-        this.stationId    = stationId;
-        this.status       = status;
-        this.imageUrl     = imageUrl;
-        this.description  = description;
+        this.stationId = stationId;
+        this.status = status;
+        this.imageUrl = imageUrl;
+        this.description = description;
     }
 
     public abstract String getBikeType();
@@ -34,42 +34,87 @@ public abstract class Bike {
         return AppConstants.BIKE_AVAILABLE.equals(status);
     }
 
-    public String getId()                        { return id; }
-    public void   setId(String id)               { this.id = id; }
+    public String getId() {
+        return id;
+    }
 
-    public String getSellerId()                  { return sellerId; }
-    public void   setSellerId(String sellerId)   { this.sellerId = sellerId; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String getType()                      { return type; }
-    public void   setType(String type)           { this.type = type; }
+    public String getSellerId() {
+        return sellerId;
+    }
 
-    public String getModel()                     { return model; }
-    public void   setModel(String model)         { this.model = model; }
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
 
-    public double getPricePerHour()              { return pricePerHour; }
-    public void   setPricePerHour(double p)      { this.pricePerHour = p; }
+    public String getType() {
+        return type;
+    }
 
-    public String getStationId()                 { return stationId; }
-    public void   setStationId(String stationId) { this.stationId = stationId; }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-    public String getStatus()                    { return status; }
-    public void   setStatus(String status)       { this.status = status; }
+    public String getModel() {
+        return model;
+    }
 
-    public String getImageUrl()                  { return imageUrl; }
-    public void   setImageUrl(String imageUrl)   { this.imageUrl = imageUrl; }
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-    public String getDescription()               { return description; }
-    public void   setDescription(String d)       { this.description = d; }
+    public double getPricePerHour() {
+        return pricePerHour;
+    }
+
+    public void setPricePerHour(double pricePerHour) {
+        this.pricePerHour = pricePerHour;
+    }
+
+    public String getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String toFileString() {
-        return id          + "|"
-                + sellerId    + "|"
-                + type        + "|"
-                + model       + "|"
+        return id + "|"
+                + sellerId + "|"
+                + type + "|"
+                + model + "|"
                 + pricePerHour + "|"
-                + stationId   + "|"
-                + status      + "|"
-                + imageUrl    + "|"
+                + stationId + "|"
+                + status + "|"
+                + imageUrl + "|"
                 + description;
     }
 }
