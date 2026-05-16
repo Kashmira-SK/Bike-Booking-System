@@ -38,6 +38,37 @@ public class BikeService {
         }
     }
 
+    private void quickSort(List<Bike> bikes, int low, int high) {
+        if (low < high) {
+            int pi = partition(bikes, low, high);
+            quickSort(bikes, low, pi - 1);
+            quickSort(bikes, pi + 1, high);
+        }
+    }
+
+    private int partition(List<Bike> bikes, int low, int high) {
+        double pivot = bikes.get(high).getPricePerHour();
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (bikes.get(j).getPricePerHour() <= pivot) {
+                i++;
+                Bike temp = bikes.get(i);
+                bikes.set(i, bikes.get(j));
+                bikes.set(j, temp);
+            }
+        }
+        Bike temp = bikes.get(i + 1);
+        bikes.set(i + 1, bikes.get(high));
+        bikes.set(high, temp);
+        return i + 1;
+    }
+
+    public List<Bike> findAvailableSorted() {
+        List<Bike> available = findAvailable();
+        if (available.size() > 1) quickSort(available, 0, available.size() - 1);
+        return available;
+    }
+
     public List<Bike> readAll() {
         List<Bike> bikes = new ArrayList<>();
         for (String line : FileHelper.readAll(AppConstants.BIKES_FILE)) {
