@@ -19,7 +19,6 @@ public class BikeServlet {
 
     @Autowired private BikeService bikeService;
     @Autowired private StationService stationService;
-    @Autowired private ExtraService extraService;
 
     @GetMapping
     public String list(Model model) {
@@ -38,13 +37,7 @@ public class BikeServlet {
         if (user == null) return "redirect:/login";
         if (!user.getRole().equals("SELLER") && !user.getRole().equals("ADMIN"))
             return "redirect:/bikes";
-        List<Bike> myBikes = bikeService.findBySeller(user.getId());
-        Map<String, List<Extra>> extrasMap = new HashMap<>();
-        for (Bike b : myBikes) {
-            extrasMap.put(b.getId(), extraService.findByBike(b.getId()));
-        }
-        model.addAttribute("bikes", myBikes);
-        model.addAttribute("extrasMap", extrasMap);
+        model.addAttribute("bikes", bikeService.findBySeller(user.getId()));
         return "myBikes";
     }
 
@@ -90,25 +83,6 @@ public class BikeServlet {
             uiModel.addAttribute("stations", stationService.readAll());
             return "addBike";
         }
-
-        List<Bike> sellerBikes = bikeService.findBySeller(sellerId);
-        if (!sellerBikes.isEmpty()) {
-            String newBikeId = sellerBikes.get(sellerBikes.size() - 1).getId();
-            int i = 0;
-            while (request.getParameter("extraName_" + i) != null) {
-                String extraName       = request.getParameter("extraName_"     + i);
-                String extraPriceStr   = request.getParameter("extraPrice_"    + i);
-                String extraIncludedStr = request.getParameter("extraIncluded_" + i);
-                if (extraName != null && !extraName.trim().isEmpty()) {
-                    double  extraPrice = (extraPriceStr != null && !extraPriceStr.isEmpty())
-                            ? Double.parseDouble(extraPriceStr) : 0.0;
-                    boolean included   = "on".equals(extraIncludedStr) || "true".equals(extraIncludedStr);
-                    extraService.addExtra(newBikeId, extraName.trim(), extraPrice, included);
-                }
-                i++;
-            }
-        }
-
         return "redirect:/bikes/mine";
     }
 
@@ -122,7 +96,6 @@ public class BikeServlet {
             return "redirect:/bikes";
         model.addAttribute("bike", bike);
         model.addAttribute("stations", stationService.readAll());
-        model.addAttribute("extras", extraService.findByBike(id));
         return "editBike";
     }
 
