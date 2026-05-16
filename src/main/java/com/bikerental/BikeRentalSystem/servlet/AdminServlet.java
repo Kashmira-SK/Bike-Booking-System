@@ -104,6 +104,13 @@ public class AdminServlet {
         return "redirect:/admin/rentals";
     }
 
+    @GetMapping("/bikes")
+    public String bikes(HttpSession session, Model model) {
+        if (!isAdmin(session)) return "redirect:/home";
+        model.addAttribute("bikes", bikeService.readAll());
+        return "redirect:/bikes";
+    }
+
     @GetMapping("/stations")
     public String stations(HttpSession session, Model model) {
         if (!isAdmin(session)) return "redirect:/home";

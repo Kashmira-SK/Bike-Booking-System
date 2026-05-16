@@ -170,7 +170,7 @@
                 </a>
             </div>
             <div class="col-sm-6 col-md-4">
-                <a href="${ctx}/payments/my" class="card text-decoration-none">
+                <a href="${ctx}/payments/history" class="card text-decoration-none">
                     <div class="card-body d-flex align-items-center gap-3 p-3">
                         <div class="icon-circle ic-green"><i class="bi bi-credit-card"></i></div>
                         <div>
