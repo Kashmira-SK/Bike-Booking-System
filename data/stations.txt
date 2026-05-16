@@ -1,3 +1,3 @@
 S001|Central Station|No 1 Main St|Colombo|20|5|MAIN
 S002|Kandy Hub|Temple Rd|Kandy|10|2|SATELLITE
-S003|Galle Fort|Fort Rd|Galle|8|1|SATELLITE
+S003|Galle Fort|Fort Rd|Galle|8|0|SATELLITE

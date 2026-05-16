@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/rentals")
 public class RentalServlet {
@@ -15,6 +17,7 @@ public class RentalServlet {
     @Autowired private RentalService rentalService;
     @Autowired private BikeService bikeService;
     @Autowired private StationService stationService;
+    @Autowired private PaymentService paymentService;
 
     @GetMapping
     public String allRentals(HttpSession session, Model model) {
@@ -28,7 +31,14 @@ public class RentalServlet {
     public String history(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
-        model.addAttribute("rentals", rentalService.findByUser(user.getId()));
+        List<Rental> rentals = rentalService.findByUser(user.getId());
+        model.addAttribute("rentals", rentals);
+        // build set of paid rentalIds
+        java.util.Set<String> paidRentalIds = new java.util.HashSet<>();
+        for (Payment p : paymentService.findByUser(user.getId())) {
+            if (p.isCompleted()) paidRentalIds.add(p.getRentalId());
+        }
+        model.addAttribute("paidRentalIds", paidRentalIds);
         return "rentalHistory";
     }
 

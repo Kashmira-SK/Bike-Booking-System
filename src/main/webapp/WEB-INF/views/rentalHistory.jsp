@@ -48,7 +48,7 @@
                                         <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
                                     </form>
                                 </c:if>
-                                <c:if test="${r.status == 'COMPLETED'}">
+                                <c:if test="${r.status == 'COMPLETED' and not paidRentalIds.contains(r.id)}">
                                     <a href="/payments/checkout?rentalId=${r.id}" class="btn btn-green btn-sm">
                                         <i class="bi bi-credit-card me-1"></i>Pay Now
                                     </a>
