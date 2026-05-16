@@ -31,7 +31,7 @@
                             </small><br>
                             <small class="text-muted">
                                 <i class="bi bi-geo me-1"></i>${r.startStation} → ${r.endStation}
-                                &nbsp;|&nbsp;${r.type}
+                                &nbsp;|&nbsp;${r.rentalType}
                             </small>
                         </div>
                         <div class="text-end">
