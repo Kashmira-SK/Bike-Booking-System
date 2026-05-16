@@ -316,6 +316,11 @@
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.15); }
         ::-webkit-scrollbar-thumb { background: #40916c; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #52b788; }
+
+        .table > :not(caption) > * > * {
+            background-color: transparent !important;
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
