@@ -1,6 +1,6 @@
 package com.bikerental.BikeRentalSystem.model;
 
-import com.bikerental.BikeRentalSystem.util.AppConstants;
+
 
 public class CashPayment extends Payment {
 
