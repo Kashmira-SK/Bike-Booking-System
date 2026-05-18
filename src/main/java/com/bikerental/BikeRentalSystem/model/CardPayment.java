@@ -9,7 +9,5 @@ public class CardPayment extends Payment {
     }
 
     @Override
-    public String getPaymentMethod() {
-        return "Card";
-    }
+   
 }
