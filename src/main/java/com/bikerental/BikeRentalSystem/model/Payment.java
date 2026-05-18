@@ -21,7 +21,7 @@ public abstract class Payment {
         this.timestamp = timestamp;
     }
 
-    
+    public abstract String getPaymentMethod();
 
     public boolean isCompleted() { return "COMPLETED".equals(status); }
 
