@@ -6,7 +6,7 @@
     <title>My Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-
+<body class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>My Profile</h2>
         <a href="/logout" class="btn btn-outline-danger">Logout</a>
