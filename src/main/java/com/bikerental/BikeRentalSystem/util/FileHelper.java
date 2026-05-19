@@ -31,6 +31,18 @@ public class FileHelper {
     }
 
     // Append one record to a file
+     public static boolean append(String filePath, String record) {
+        try {
+            ensureFile(filePath);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
+            writer.write(record);
+            writer.newLine();
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            System.err.println("FileHelper.append error: " + e.getMessage());
+            return false;
+        }
    
     }
 
