@@ -9,7 +9,7 @@
 <body class="container mt-5" style="max-width: 440px;">
     <h2 class="mb-4">Login</h2>
 
-   
+    <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
     </c:if>
 
