@@ -2,7 +2,12 @@ package com.bikerental.BikeRentalSystem.util;
 
 public class AppConstants {
 
-   
+    public static final String RENTALS_FILE     = "data/rentals.txt";
+    public static final String USERS_FILE       = "data/users.txt";
+    public static final String BIKES_FILE       = "data/bikes.txt";
+    public static final String STATIONS_FILE    = "data/stations.txt";
+    public static final String PAYMENTS_FILE    = "data/payments.txt";
+    public static final String REVIEWS_FILE     = "data/reviews.txt";
 
     public static final String SEP              = "|";
 
