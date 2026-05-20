@@ -95,13 +95,30 @@ public class PaymentService {
         String timestamp = LocalDateTime.now().format(FMT);
 
         Payment payment;
+        String status = AppConstants.METHOD_CARD.equals(method)
+                ? AppConstants.PAYMENT_PENDING
+                : AppConstants.PAYMENT_DONE;
+
         if (AppConstants.METHOD_CASH.equals(method)) {
-            payment = new CashPayment(id, rentalId, userId, amount, AppConstants.PAYMENT_DONE, timestamp);
+            payment = new CashPayment(id, rentalId, userId, amount, status, timestamp);
         } else {
-            payment = new CardPayment(id, rentalId, userId, amount, AppConstants.PAYMENT_DONE, timestamp);
+            payment = new CardPayment(id, rentalId, userId, amount, status, timestamp);
         }
 
         boolean saved = FileHelper.append(AppConstants.PAYMENTS_FILE, payment.toFileString());
         return saved ? payment : null;
+    }
+
+    public boolean approve(String paymentId) {
+        Payment payment = findById(paymentId);
+        if (payment == null || !AppConstants.PAYMENT_PENDING.equals(payment.getStatus())) return false;
+        payment.setStatus(AppConstants.PAYMENT_DONE);
+        List<String> lines  = FileHelper.readAll(AppConstants.PAYMENTS_FILE);
+        List<String> result = new ArrayList<>();
+        for (String line : lines) {
+            String[] p = line.split("\\" + AppConstants.SEP);
+            result.add(p[0].equals(paymentId) ? payment.toFileString() : line);
+        }
+        return FileHelper.writeAll(AppConstants.PAYMENTS_FILE, result);
     }
 }

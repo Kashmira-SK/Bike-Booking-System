@@ -48,6 +48,23 @@ public class AdminServlet {
         return "adminDashboard";
     }
 
+    @GetMapping("/payments")
+    public String payments(HttpSession session, Model model) {
+        if (!isAdmin(session)) return "redirect:/home";
+        model.addAttribute("pendingPayments", paymentService.readAll()
+                .stream()
+                .filter(p -> AppConstants.PAYMENT_PENDING.equals(p.getStatus()))
+                .toList());
+        return "adminPayments";
+    }
+
+    @PostMapping("/payments/approve/{id}")
+    public String approvePayment(@PathVariable String id, HttpSession session) {
+        if (!isAdmin(session)) return "redirect:/home";
+        paymentService.approve(id);
+        return "redirect:/admin/payments";
+    }
+
     @GetMapping("/users")
     public String users(HttpSession session, Model model) {
         if (!isAdmin(session)) return "redirect:/home";

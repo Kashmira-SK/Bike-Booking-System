@@ -55,6 +55,15 @@
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
+                    <p class="text-muted small mb-1"><i class="bi bi-credit-card me-1"></i>Pending Payments</p>
+                    <p class="display-6 fw-bold mb-3">—</p>
+                    <a href="/admin/payments" class="btn btn-green btn-sm">Manage →</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
                     <p class="text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i>Stations</p>
                     <p class="display-6 fw-bold mb-3">—</p>
                     <a href="/admin/stations" class="btn btn-green btn-sm">Manage →</a>
