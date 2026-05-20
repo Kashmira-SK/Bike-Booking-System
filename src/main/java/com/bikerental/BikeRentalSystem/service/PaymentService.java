@@ -85,5 +85,24 @@ public class PaymentService {
     }
 
     // Returns the created Payment on success, null on failure
+      public Payment createPayment(String rentalId, String userId, String method) {
+        if (!rentalIsPayable(rentalId)) return null;
+
+        double amount = getRentalCost(rentalId);
+        if (amount < 0) return null;
+
+        String id        = FileHelper.generateId();
+        String timestamp = LocalDateTime.now().format(FMT);
+
+        Payment payment;
+        if (AppConstants.METHOD_CASH.equals(method)) {
+            payment = new CashPayment(id, rentalId, userId, amount, AppConstants.PAYMENT_DONE, timestamp);
+        } else {
+            payment = new CardPayment(id, rentalId, userId, amount, AppConstants.PAYMENT_DONE, timestamp);
+        }
+
+        boolean saved = FileHelper.append(AppConstants.PAYMENTS_FILE, payment.toFileString());
+        return saved ? payment : null;
+    }
   
 }
