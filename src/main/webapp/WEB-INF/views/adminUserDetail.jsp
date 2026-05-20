@@ -15,8 +15,19 @@
             <p><strong>Name:</strong> ${user.name}</p>
             <p><strong>Email:</strong> ${user.email}</p>
             <p><strong>Phone:</strong> ${user.phone}</p>
-            <p><strong>Role:</strong> ${user.role}</p>
-            <p class="mb-0"><strong>Status:</strong> ${user.status}</p>
+            <p><strong>Role:</strong>
+                <c:choose>
+                    <c:when test="${user.role eq 'ADMIN'}"><span class="badge bg-warning">ADMIN</span></c:when>
+                    <c:when test="${user.role eq 'SELLER'}"><span class="badge bg-success">SELLER</span></c:when>
+                    <c:otherwise><span class="badge bg-secondary">REGULAR</span></c:otherwise>
+                </c:choose>
+            </p>
+            <p class="mb-0"><strong>Status:</strong>
+                <c:choose>
+                    <c:when test="${user.status eq 'ACTIVE'}"><span class="badge bg-success">ACTIVE</span></c:when>
+                    <c:otherwise><span class="badge bg-secondary">${user.status}</span></c:otherwise>
+                </c:choose>
+            </p>
         </div>
     </div>
 
@@ -35,7 +46,15 @@
                         <c:forEach var="r" items="${rentals}">
                             <tr>
                                 <td>${r.id}</td><td>${r.bikeId}</td><td>${r.rentalType}</td>
-                                <td>${r.status}</td><td>$${r.cost}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${r.status eq 'ACTIVE'}"><span class="badge bg-success">ACTIVE</span></c:when>
+                                        <c:when test="${r.status eq 'COMPLETED'}"><span class="badge bg-primary">COMPLETED</span></c:when>
+                                        <c:when test="${r.status eq 'CANCELLED'}"><span class="badge bg-danger">CANCELLED</span></c:when>
+                                        <c:otherwise><span class="badge bg-secondary">${r.status}</span></c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>$${r.cost}</td>
                                 <td>${r.startTime}</td><td>${r.endTime}</td>
                             </tr>
                         </c:forEach>
@@ -63,7 +82,15 @@
                         <c:forEach var="p" items="${payments}">
                             <tr>
                                 <td>${p.id}</td><td>${p.rentalId}</td><td>$${p.amount}</td>
-                                <td>${p.method}</td><td>${p.status}</td><td>${p.timestamp}</td>
+                                <td><span class="badge bg-secondary">${p.method}</span></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${p.status eq 'COMPLETED'}"><span class="badge bg-success">COMPLETED</span></c:when>
+                                        <c:when test="${p.status eq 'PENDING'}"><span class="badge bg-warning">PENDING</span></c:when>
+                                        <c:otherwise><span class="badge bg-danger">${p.status}</span></c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>${p.timestamp}</td>
                             </tr>
                         </c:forEach>
                         <c:if test="${empty payments}">

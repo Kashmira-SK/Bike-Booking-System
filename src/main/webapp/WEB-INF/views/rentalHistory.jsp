@@ -21,9 +21,17 @@
                 <div class="card">
                     <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-3">
                         <div>
-                            <span class="badge ${r.status == 'ACTIVE' ? 'bg-success' : r.status == 'COMPLETED' ? 'bg-secondary' : 'bg-danger'} mb-1">
-                                ${r.status}
-                            </span>
+                            <c:choose>
+                                <c:when test="${r.status eq 'ACTIVE'}">
+                                    <span class="badge bg-success mb-1">ACTIVE</span>
+                                </c:when>
+                                <c:when test="${r.status eq 'COMPLETED'}">
+                                    <span class="badge bg-primary mb-1">COMPLETED</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="badge bg-danger mb-1">${r.status}</span>
+                                </c:otherwise>
+                            </c:choose>
                             <h6 class="mb-1">Bike: ${r.bikeId}</h6>
                             <small class="text-muted">
                                 <i class="bi bi-calendar me-1"></i>${r.startTime}
@@ -39,7 +47,7 @@
                                 <div class="fw-bold fs-5" style="color:#74c69d;">$${r.cost}</div>
                             </c:if>
                             <div class="d-flex gap-2 mt-2">
-                                <c:if test="${r.status == 'ACTIVE'}">
+                                <c:if test="${r.status eq 'ACTIVE'}">
                                     <a href="/rentals/return?rentalId=${r.id}" class="btn btn-warning btn-sm">
                                         <i class="bi bi-arrow-return-left me-1"></i>Return
                                     </a>
@@ -48,7 +56,7 @@
                                         <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
                                     </form>
                                 </c:if>
-                                <c:if test="${r.status == 'COMPLETED' and not paidRentalIds.contains(r.id)}">
+                                <c:if test="${r.status eq 'COMPLETED' and not paidRentalIds.contains(r.id)}">
                                     <a href="/payments/checkout?rentalId=${r.id}" class="btn btn-green btn-sm">
                                         <i class="bi bi-credit-card me-1"></i>Pay Now
                                     </a>

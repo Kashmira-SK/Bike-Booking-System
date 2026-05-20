@@ -26,10 +26,13 @@
                                 <td>${r.rentalType}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${r.status == 'ACTIVE'}">
+                                        <c:when test="${r.status eq 'ACTIVE'}">
                                             <span class="badge bg-success">ACTIVE</span>
                                         </c:when>
-                                        <c:when test="${r.status == 'CANCELLED'}">
+                                        <c:when test="${r.status eq 'COMPLETED'}">
+                                            <span class="badge bg-primary">COMPLETED</span>
+                                        </c:when>
+                                        <c:when test="${r.status eq 'CANCELLED'}">
                                             <span class="badge bg-danger">CANCELLED</span>
                                         </c:when>
                                         <c:otherwise>
@@ -40,7 +43,7 @@
                                 <td>$${r.cost}</td>
                                 <td>${r.startTime}</td>
                                 <td>
-                                    <c:if test="${r.status == 'ACTIVE'}">
+                                    <c:if test="${r.status eq 'ACTIVE'}">
                                         <form action="/admin/rentals/cancel/${r.id}" method="post" class="d-inline">
                                             <button type="submit" class="btn btn-warning btn-sm">Cancel</button>
                                         </form>

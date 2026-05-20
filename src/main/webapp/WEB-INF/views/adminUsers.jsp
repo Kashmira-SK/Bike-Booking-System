@@ -23,10 +23,10 @@
                                 <td>${u.email}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${u.role == 'ADMIN'}">
+                                        <c:when test="${u.role eq 'ADMIN'}">
                                             <span class="badge bg-warning">ADMIN</span>
                                         </c:when>
-                                        <c:when test="${u.role == 'SELLER'}">
+                                        <c:when test="${u.role eq 'SELLER'}">
                                             <span class="badge bg-success">SELLER</span>
                                         </c:when>
                                         <c:otherwise>
@@ -36,7 +36,7 @@
                                 </td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${u.status == 'ACTIVE'}">
+                                        <c:when test="${u.status eq 'ACTIVE'}">
                                             <span class="badge bg-success">ACTIVE</span>
                                         </c:when>
                                         <c:otherwise>
@@ -51,9 +51,9 @@
                                             <input type="hidden" name="userId" value="${u.id}">
                                             <select name="newRole" class="form-select form-select-sm d-inline-block"
                                                     style="width:auto;display:inline-block!important">
-                                                <option value="REGULAR" ${u.role == 'REGULAR' ? 'selected' : ''}>REGULAR</option>
-                                                <option value="SELLER"  ${u.role == 'SELLER'  ? 'selected' : ''}>SELLER</option>
-                                                <option value="ADMIN"   ${u.role == 'ADMIN'   ? 'selected' : ''}>ADMIN</option>
+                                                <option value="REGULAR" ${u.role eq 'REGULAR' ? 'selected' : ''}>REGULAR</option>
+                                                <option value="SELLER"  ${u.role eq 'SELLER'  ? 'selected' : ''}>SELLER</option>
+                                                <option value="ADMIN"   ${u.role eq 'ADMIN'   ? 'selected' : ''}>ADMIN</option>
                                             </select>
                                             <button type="submit" class="btn btn-green btn-sm">Save</button>
                                         </form>
