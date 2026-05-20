@@ -56,10 +56,13 @@
                                         <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
                                     </form>
                                 </c:if>
-                                <c:if test="${r.status eq 'COMPLETED' and not paidRentalIds.contains(r.id)}">
+                                <c:if test="${r.status eq 'COMPLETED' and not paidRentalIds.contains(r.id) and not pendingRentalIds.contains(r.id)}">
                                     <a href="/payments/checkout?rentalId=${r.id}" class="btn btn-green btn-sm">
                                         <i class="bi bi-credit-card me-1"></i>Pay Now
                                     </a>
+                                </c:if>
+                                <c:if test="${pendingRentalIds.contains(r.id)}">
+                                    <span class="badge bg-warning">Payment Pending</span>
                                 </c:if>
                             </div>
                         </div>

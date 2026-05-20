@@ -2,13 +2,16 @@ package com.bikerental.BikeRentalSystem.servlet;
 
 import com.bikerental.BikeRentalSystem.model.*;
 import com.bikerental.BikeRentalSystem.service.*;
+import com.bikerental.BikeRentalSystem.util.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/rentals")
@@ -31,14 +34,22 @@ public class RentalServlet {
     public String history(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
-        List<Rental> rentals = rentalService.findByUser(user.getId());
-        model.addAttribute("rentals", rentals);
-        // build set of paid rentalIds
-        java.util.Set<String> paidRentalIds = new java.util.HashSet<>();
+
+        model.addAttribute("rentals", rentalService.findByUser(user.getId()));
+
+        Set<String> paidRentalIds    = new HashSet<>();
+        Set<String> pendingRentalIds = new HashSet<>();
+
         for (Payment p : paymentService.findByUser(user.getId())) {
-            if (p.isCompleted()) paidRentalIds.add(p.getRentalId());
+            if (p.isCompleted()) {
+                paidRentalIds.add(p.getRentalId());
+            } else if (AppConstants.PAYMENT_PENDING.equals(p.getStatus())) {
+                pendingRentalIds.add(p.getRentalId());
+            }
         }
-        model.addAttribute("paidRentalIds", paidRentalIds);
+
+        model.addAttribute("paidRentalIds",    paidRentalIds);
+        model.addAttribute("pendingRentalIds", pendingRentalIds);
         return "rentalHistory";
     }
 
