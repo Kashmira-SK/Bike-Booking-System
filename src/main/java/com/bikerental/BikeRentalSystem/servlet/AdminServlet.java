@@ -45,6 +45,10 @@ public class AdminServlet {
         model.addAttribute("totalRentals",  rentals.size());
         model.addAttribute("activeRentals", activeRentals);
         model.addAttribute("totalRevenue",  totalRevenue);
+        model.addAttribute("totalStations", stationService.readAll().size());
+        model.addAttribute("totalPending", paymentService.readAll().stream()
+                .filter(p -> AppConstants.PAYMENT_PENDING.equals(p.getStatus()))
+                .count());
         return "adminDashboard";
     }
 
