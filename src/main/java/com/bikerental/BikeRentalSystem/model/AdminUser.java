@@ -1,4 +1,4 @@
-package com.bikerental.BikeRentalSystem.model; //meka model kiyana pachage ekata aithi
+package com.bikerental.BikeRentalSystem.model;
 
 import com.bikerental.BikeRentalSystem.util.AppConstants;
 
