@@ -12,4 +12,4 @@ public class CashPayment extends Payment {
     public String getPaymentMethod() {
         return "Cash";
     }
-}
+
