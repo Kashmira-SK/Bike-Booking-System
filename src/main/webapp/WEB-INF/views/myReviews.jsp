@@ -32,6 +32,7 @@
                                     <td>${r.comment}</td>
                                     <td>${r.timestamp}</td>
                                     <td>
+                                        <a href="/reviews/edit/${r.id}" class="btn btn-sm btn-green me-1">Edit</a>
                                         <form action="/reviews/delete/${r.id}" method="post" class="d-inline"
                                               onsubmit="return confirm('Delete this review?')">
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
