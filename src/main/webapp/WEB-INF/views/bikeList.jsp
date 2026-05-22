@@ -1,27 +1,43 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file="navbar.jsp" %>
+
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold mb-0"><i class="bi bi-bicycle me-2"></i>Bikes</h2>
         <c:if test="${not empty sessionScope.loggedInUser and
-            (sessionScope.loggedInUser.role == 'ADMIN' or sessionScope.loggedInUser.role == 'SELLER')}">
+            (sessionScope.loggedInUser.role eq 'ADMIN' or sessionScope.loggedInUser.role eq 'SELLER')}">
             <a href="/bikes/add" class="btn btn-green"><i class="bi bi-plus-lg me-1"></i>Add Bike</a>
         </c:if>
     </div>
+
     <c:if test="${empty bikes}">
         <div class="card p-5 text-center text-muted">No bikes found. Add one to get started.</div>
     </c:if>
+
     <div class="row g-4">
         <c:forEach var="b" items="${bikes}">
             <div class="col-md-4">
                 <div class="card h-100">
+                    <c:if test="${not empty b.imageUrl}">
+                        <img src="${b.imageUrl}" class="card-img-top"
+                             style="height:180px;object-fit:cover;"
+                             alt="${b.model}">
+                    </c:if>
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <h5 class="card-title mb-0">${b.model}</h5>
-                            <span class="badge ${b.status == 'AVAILABLE' ? 'bg-success' : b.status == 'RENTED' ? 'bg-warning' : 'bg-secondary'}">
-                                ${b.status}
-                            </span>
+                            <c:choose>
+                                <c:when test="${b.status eq 'AVAILABLE'}">
+                                    <span class="badge bg-success">${b.status}</span>
+                                </c:when>
+                                <c:when test="${b.status eq 'RENTED'}">
+                                    <span class="badge bg-warning">${b.status}</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="badge bg-secondary">${b.status}</span>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <p class="text-muted mb-1"><i class="bi bi-tag me-1"></i>${b.bikeType}</p>
                         <p class="text-muted mb-1">
@@ -31,11 +47,14 @@
                                 <c:otherwise>Unknown Station</c:otherwise>
                             </c:choose>
                         </p>
+                        <c:if test="${not empty b.description}">
+                            <p class="text-muted small mb-1">${b.description}</p>
+                        </c:if>
                         <p class="fw-bold fs-5 mt-2" style="color:#74c69d;">$${b.pricePerHour}/hr</p>
                     </div>
                     <div class="card-footer d-flex gap-2">
                         <c:choose>
-                            <c:when test="${b.status == 'AVAILABLE'}">
+                            <c:when test="${b.status eq 'AVAILABLE'}">
                                 <a href="/rentals/rent?bikeId=${b.id}" class="btn btn-green flex-grow-1">
                                     <i class="bi bi-key me-1"></i>Rent This Bike
                                 </a>
@@ -45,8 +64,8 @@
                             </c:otherwise>
                         </c:choose>
                         <c:if test="${not empty sessionScope.loggedInUser and
-                            (sessionScope.loggedInUser.role == 'ADMIN' or
-                             sessionScope.loggedInUser.id == b.sellerId)}">
+                            (sessionScope.loggedInUser.role eq 'ADMIN' or
+                             sessionScope.loggedInUser.id eq b.sellerId)}">
                             <a href="/bikes/edit/${b.id}" class="btn btn-outline-secondary">
                                 <i class="bi bi-pencil"></i>
                             </a>
@@ -63,4 +82,5 @@
         </c:forEach>
     </div>
 </div>
+
 <%@ include file="footer.jsp" %>
