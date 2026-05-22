@@ -93,4 +93,26 @@ public class ReviewService {
     public boolean delete(String id) {
         return FileHelper.deleteById(AppConstants.REVIEWS_FILE, id);
     }
+
+    public boolean update(String id, int rating, String comment) {
+        if (rating < 1 || rating > 5)
+            return false;
+
+        Review review = findById(id);
+
+        if (review == null)
+            return false;
+
+        review.setRating(rating);
+        review.setComment(comment);
+
+        List<String> lines  = FileHelper.readAll(AppConstants.REVIEWS_FILE);
+        List<String> result = new ArrayList<>();
+
+        for (String line : lines) {
+            String[] p = line.split("\\" + AppConstants.SEP);
+            result.add(p[0].equals(id) ? review.toFileString() : line);
+        }
+        return FileHelper.writeAll(AppConstants.REVIEWS_FILE, result);
+    }
 }
