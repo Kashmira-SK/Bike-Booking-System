@@ -43,4 +43,4 @@ public abstract class Payment {
     public String toFileString() {
         return id + "|" + rentalId + "|" + userId + "|" + amount + "|" + method + "|" + status + "|" + timestamp;
     }
-}
+
