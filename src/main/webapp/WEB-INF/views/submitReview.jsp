@@ -20,9 +20,15 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Target ID (Bike ID or Rental ID)</label>
-                    <input type="text" name="targetId" class="form-control"
-                           value="${not empty targetId ? targetId : ''}" required>
+                    <label class="form-label">Target</label>
+                    <select name="targetId" class="form-select" required>
+                        <option value="">-- Select --</option>
+                        <c:forEach var="b" items="${bikes}">
+                            <option value="${b.id}" ${targetId eq b.id ? 'selected' : ''}>
+                                ${b.model} (${b.bikeType}) — ${b.id}
+                            </option>
+                        </c:forEach>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Rating (1–5)</label>

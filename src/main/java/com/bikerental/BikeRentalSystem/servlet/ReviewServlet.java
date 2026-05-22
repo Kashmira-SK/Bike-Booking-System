@@ -2,6 +2,7 @@ package com.bikerental.BikeRentalSystem.servlet;
 
 import com.bikerental.BikeRentalSystem.model.Review;
 import com.bikerental.BikeRentalSystem.model.User;
+import com.bikerental.BikeRentalSystem.service.BikeService;
 import com.bikerental.BikeRentalSystem.service.ReviewService;
 import com.bikerental.BikeRentalSystem.util.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class ReviewServlet {
 
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private BikeService bikeService;
 
     // Guest accessible
     @GetMapping
@@ -42,6 +45,7 @@ public class ReviewServlet {
         model.addAttribute("type", type);
         model.addAttribute("reviewBike", AppConstants.REVIEW_BIKE);
         model.addAttribute("reviewService", AppConstants.REVIEW_SERVICE);
+        model.addAttribute("bikes", bikeService.readAll());
         return "submitReview";
     }
 
