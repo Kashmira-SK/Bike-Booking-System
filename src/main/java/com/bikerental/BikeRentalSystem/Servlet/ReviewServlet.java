@@ -1,6 +1,8 @@
 package com.bikerental.BikeRentalSystem.servlet;
 
+import com.bikerental.BikeRentalSystem.model.Review;
 import com.bikerental.BikeRentalSystem.model.User;
+import com.bikerental.BikeRentalSystem.service.BikeService;
 import com.bikerental.BikeRentalSystem.service.ReviewService;
 import com.bikerental.BikeRentalSystem.util.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class ReviewServlet {
 
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private BikeService bikeService;
 
     // Guest accessible
     @GetMapping
@@ -41,6 +45,7 @@ public class ReviewServlet {
         model.addAttribute("type", type);
         model.addAttribute("reviewBike", AppConstants.REVIEW_BIKE);
         model.addAttribute("reviewService", AppConstants.REVIEW_SERVICE);
+        model.addAttribute("bikes", bikeService.readAll());
         return "submitReview";
     }
 
@@ -62,10 +67,42 @@ public class ReviewServlet {
         return "submitReview";
     }
 
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable String id, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null)
+            return "redirect:/login";
+
+        Review review = reviewService.findById(id);
+
+        if (review == null || !review.getUserId().equals(user.getId()))
+            return "redirect:/reviews/my";
+
+        model.addAttribute("review", review);
+        return "editReview";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editReview(@PathVariable String id, @RequestParam int rating, @RequestParam String comment, HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null)
+            return "redirect:/login";
+
+        boolean success = reviewService.update(id, rating, comment);
+        if (success)
+            return "redirect:/reviews/my";
+
+        model.addAttribute("error", "Failed to update review. Rating must be between 1 and 5.");
+        model.addAttribute("review", reviewService.findById(id));
+        return "editReview";
+    }
+
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable String id, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+        if (user == null)
+            return "redirect:/login";
         reviewService.delete(id);
         return "redirect:/reviews/my";
     }
