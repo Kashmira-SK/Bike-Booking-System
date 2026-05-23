@@ -3,6 +3,7 @@ package com.bikerental.BikeRentalSystem.servlet;
 import com.bikerental.BikeRentalSystem.model.*;
 import com.bikerental.BikeRentalSystem.service.*;
 import com.bikerental.BikeRentalSystem.util.AppConstants;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,10 @@ public class RentalServlet {
     @GetMapping
     public String allRentals(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+
+        if (user == null)
+            return "redirect:/login";
+
         model.addAttribute("rentals", rentalService.readAll());
         return "allRentals";
     }
@@ -33,7 +37,9 @@ public class RentalServlet {
     @GetMapping("/history")
     public String history(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+
+        if (user == null)
+            return "redirect:/login";
 
         model.addAttribute("rentals", rentalService.findByUser(user.getId()));
 
@@ -54,28 +60,34 @@ public class RentalServlet {
     }
 
     @GetMapping("/rent")
-    public String showRentForm(@RequestParam(required = false) String bikeId,
-                               HttpSession session, Model model) {
+    public String showRentForm(@RequestParam(required = false) String bikeId, HttpSession session, Model model) {
+
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+
+        if (user == null)
+            return "redirect:/login";
+
         if (bikeId != null) {
             model.addAttribute("selectedBike", bikeService.findById(bikeId));
         }
+
         model.addAttribute("availableBikes", bikeService.findAvailableSorted());
         model.addAttribute("stations", stationService.readAll());
         return "rentBike";
     }
 
     @PostMapping("/rent")
-    public String rentBike(@RequestParam String bikeId,
-                           @RequestParam String startStation,
-                           @RequestParam String endStation,
-                           @RequestParam String type,
-                           HttpSession session, Model model) {
+    public String rentBike(@RequestParam String bikeId, @RequestParam String startStation, @RequestParam String endStation, @RequestParam String type, HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+
+        if (user == null)
+            return "redirect:/login";
+
         boolean success = rentalService.rentBike(user.getId(), bikeId, startStation, endStation, type);
-        if (success) return "redirect:/rentals/history";
+
+        if (success)
+            return "redirect:/rentals/history";
+
         model.addAttribute("error", "Could not rent bike. It may no longer be available.");
         model.addAttribute("availableBikes", bikeService.findAvailableSorted());
         model.addAttribute("stations", stationService.readAll());
@@ -86,7 +98,10 @@ public class RentalServlet {
     public String showReturnForm(@RequestParam(required = false) String rentalId,
                                  HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+
+        if (user == null)
+            return "redirect:/login";
+
         if (rentalId != null) {
             model.addAttribute("rental", rentalService.findById(rentalId));
         }
@@ -94,11 +109,13 @@ public class RentalServlet {
     }
 
     @PostMapping("/return")
-    public String returnBike(@RequestParam String rentalId,
-                             HttpSession session, Model model) {
+    public String returnBike(@RequestParam String rentalId, HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+
+        if (user == null)
+            return "redirect:/login";
         double cost = rentalService.returnBike(rentalId);
+
         if (cost < 0) {
             model.addAttribute("error", "Rental not found or already completed.");
             return "returnBike";
@@ -109,7 +126,10 @@ public class RentalServlet {
     @PostMapping("/cancel/{id}")
     public String cancel(@PathVariable String id, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) return "redirect:/login";
+
+        if (user == null)
+            return "redirect:/login";
+
         rentalService.cancel(id);
         return "redirect:/rentals/history";
     }
