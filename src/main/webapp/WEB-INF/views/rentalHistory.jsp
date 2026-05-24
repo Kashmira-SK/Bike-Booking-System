@@ -25,28 +25,6 @@
                                 <c:when test="${r.status eq 'ACTIVE'}">
                                     <span class="badge bg-success mb-1">ACTIVE</span>
                                 </c:when>
-                                <c:when test="${r.status eq 'COMPLETED'}">
-                                    <span class="badge bg-primary mb-1">COMPLETED</span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="badge bg-danger mb-1">${r.status}</span>
-                                </c:otherwise>
-                            </c:choose>
-                            <h6 class="mb-1">Bike: ${r.bikeId}</h6>
-                            <small class="text-muted">
-                                <i class="bi bi-calendar me-1"></i>${r.startTime}
-                                <c:if test="${not empty r.endTime}"> → ${r.endTime}</c:if>
-                            </small><br>
-                            <small class="text-muted">
-                                <i class="bi bi-geo me-1"></i>${r.startStation} → ${r.endStation}
-                                &nbsp;|&nbsp;${r.rentalType}
-                            </small>
-                        </div>
-                        <div class="text-end">
-                            <c:if test="${r.cost > 0}">
-                                <div class="fw-bold fs-5" style="color:#74c69d;">$${r.cost}</div>
-                            </c:if>
-                            <div class="d-flex gap-2 mt-2">
                                 <c:if test="${r.status eq 'ACTIVE'}">
                                     <a href="/rentals/return?rentalId=${r.id}" class="btn btn-warning btn-sm">
                                         <i class="bi bi-arrow-return-left me-1"></i>Return
