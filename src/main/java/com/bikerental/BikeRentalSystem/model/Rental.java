@@ -32,92 +32,74 @@ public abstract class Rental {
     }
 
     public String getId(){
-
         return id;
     }
 
     public void   setId(String id){
-
         this.id = id;
     }
 
     public String getUserId(){
-
         return userId;
     }
 
     public void   setUserId(String u){
-
         this.userId = u;
     }
 
     public String getBikeId(){
-
         return bikeId;
     }
 
     public void   setBikeId(String b){
-
         this.bikeId = b;
     }
 
     public String getStartStation(){
-
         return startStation;
     }
 
     public void   setStartStation(String s){
-
         this.startStation = s;
     }
 
     public String getEndStation(){
-
         return endStation;
     }
 
     public void   setEndStation(String s){
-
         this.endStation = s;
     }
 
     public String getStartTime(){
-
         return startTime;
     }
 
     public void   setStartTime(String t){
-
         this.startTime = t;
     }
 
     public String getEndTime(){
-
         return endTime;
     }
 
     public void   setEndTime(String t){
-
         this.endTime = t;
     }
 
     public double getCost(){
-
         return cost;
     }
 
     public void   setCost(double cost){
-
         this.cost = cost;
     }
 
     public String getStatus(){
-
         return status;
     }
 
     public void   setStatus(String status){
-
         this.status = status;
     }
 
