@@ -13,7 +13,7 @@ public class DailyRental extends Rental {
 
     @Override
     public double calculateCost(double pricePerHour) {
-        // Cost calculation is handled in RentalService.calculateCost()
+        //Cost calculation is handled in RentalService.calculateCost()
         return 0;
     }
 }
