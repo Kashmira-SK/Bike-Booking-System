@@ -36,8 +36,7 @@
             <div class="mb-3">
                 <label class="form-label">Bike</label>
                 <c:choose>
-                    <c:when test="${not empty selectedBike}">
-                        <input type="hidden" name="bikeId" value="${selectedBike.id}">
+
                         <input type="text" class="form-control" value="${selectedBike.model}" disabled>
                     </c:when>
                     <c:otherwise>
