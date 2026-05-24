@@ -12,10 +12,7 @@ public abstract class Rental {
     private double cost;
     private String status;
 
-    public Rental(String id, String userId, String bikeId,
-                  String startStation, String endStation,
-                  String startTime, String endTime,
-                  double cost, String status) {
+    public Rental(String id, String userId, String bikeId, String startStation, String endStation, String startTime, String endTime, double cost, String status) {
         this.id           = id;
         this.userId       = userId;
         this.bikeId       = bikeId;
