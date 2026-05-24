@@ -87,30 +87,37 @@ public abstract class Rental {
     }
 
     public void   setStartTime(String t){
+
         this.startTime = t;
     }
 
     public String getEndTime(){
+
         return endTime;
     }
 
     public void   setEndTime(String t){
+
         this.endTime = t;
     }
 
     public double getCost(){
+
         return cost;
     }
 
     public void   setCost(double cost){
+
         this.cost = cost;
     }
 
     public String getStatus(){
+
         return status;
     }
 
     public void   setStatus(String status){
+
         this.status = status;
     }
 
