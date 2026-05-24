@@ -10,11 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
-
+// @Controller kiyanne meka web requests handle karana class ekak kiyala Spring Boot ekata kiyana eka
 @Controller
 @RequestMapping("/reviews")
 public class ReviewServlet {
-
+// ReviewService ekayi BikeService ekayi connect karana eka
     @Autowired
     private ReviewService reviewService;
     @Autowired
@@ -30,8 +30,10 @@ public class ReviewServlet {
     // Login needed
     @GetMapping("/my")
     public String myReviews(HttpSession session, Model model) {
+        // login welada kyl check krnwa
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
+        // loging unama front ekata ID eka name eka yawanwa
         model.addAttribute("reviews", reviewService.findByUser(user.getId()));
         return "myReviews";
     }
@@ -59,7 +61,9 @@ public class ReviewServlet {
                                Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
+        // frontend ekata apu data tika save karanwa
         boolean success = reviewService.create(user.getId(), targetId, rating, comment, type);
+        // save unama review page ekata yawanawa
         if (success) return "redirect:/reviews/my";
         model.addAttribute("error", "Failed to submit review. Rating must be between 1 and 5.");
         model.addAttribute("targetId", targetId);
@@ -72,7 +76,7 @@ public class ReviewServlet {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null)
             return "redirect:/login";
-
+//URL eke ID adala review  eka hoyanwa
         Review review = reviewService.findById(id);
 
         if (review == null || !review.getUserId().equals(user.getId()))
@@ -88,7 +92,7 @@ public class ReviewServlet {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null)
             return "redirect:/login";
-
+// aluth rating update krnwa
         boolean success = reviewService.update(id, rating, comment);
         if (success)
             return "redirect:/reviews/my";
