@@ -44,3 +44,4 @@ public abstract class Payment {
         return id + "|" + rentalId + "|" + userId + "|" + amount + "|" + method + "|" + status + "|" + timestamp;
     }
 }
+
