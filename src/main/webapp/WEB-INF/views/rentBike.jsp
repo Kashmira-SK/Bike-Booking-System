@@ -87,18 +87,4 @@
                 </div>
             </div>
 
-            <div class="alert alert-info mb-3">
-                <i class="bi bi-info-circle me-2"></i>
-                Cost is calculated based on actual time used when you return the bike.
-            </div>
-
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-green flex-grow-1">Confirm Rental</button>
-                <a href="/bikes" class="btn btn-outline-secondary">Cancel</a>
-            </div>
-
-        </form>
-    </div>
-</div>
-
 <%@ include file="footer.jsp" %>
