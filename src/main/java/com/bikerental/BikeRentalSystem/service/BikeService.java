@@ -3,6 +3,7 @@ package com.bikerental.BikeRentalSystem.service;
 import com.bikerental.BikeRentalSystem.model.*;
 import com.bikerental.BikeRentalSystem.util.AppConstants;
 import com.bikerental.BikeRentalSystem.util.FileHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @Service
 public class BikeService {
+
+    @Autowired
+    private StationService stationService;
 
     private Bike parseLine(String line) {
         String[] p = line.split("\\" + AppConstants.SEP);
@@ -23,7 +27,6 @@ public class BikeService {
         String stationId    = p[5];
         String status       = p[6];
         String imageUrl     = p[7];
-
         String description  = p[8];
 
         switch (type) {
@@ -36,6 +39,37 @@ public class BikeService {
             default:
                 return null;
         }
+    }
+
+    private void quickSort(List<Bike> bikes, int low, int high) {
+        if (low < high) {
+            int pi = partition(bikes, low, high);
+            quickSort(bikes, low, pi - 1);
+            quickSort(bikes, pi + 1, high);
+        }
+    }
+
+    private int partition(List<Bike> bikes, int low, int high) {
+        double pivot = bikes.get(high).getPricePerHour();
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (bikes.get(j).getPricePerHour() <= pivot) {
+                i++;
+                Bike temp = bikes.get(i);
+                bikes.set(i, bikes.get(j));
+                bikes.set(j, temp);
+            }
+        }
+        Bike temp = bikes.get(i + 1);
+        bikes.set(i + 1, bikes.get(high));
+        bikes.set(high, temp);
+        return i + 1;
+    }
+
+    public List<Bike> findAvailableSorted() {
+        List<Bike> available = findAvailable();
+        if (available.size() > 1) quickSort(available, 0, available.size() - 1);
+        return available;
     }
 
     public List<Bike> readAll() {
@@ -76,28 +110,16 @@ public class BikeService {
         return result;
     }
 
-    /**
-     * Creates and persists a new bike.
-     *
-     * @param sellerId    userId of the seller, or "ADMIN" for admin-added bikes
-     * @param type        MOUNTAIN | ROAD | ELECTRIC
-     * @param model       model name
-     * @param pricePerHour hourly rate
-     * @param stationId   station the bike belongs to
-     * @param imageUrl    URL string, may be empty
-     * @param description short text (no pipe characters)
-     */
     public boolean create(String sellerId, String type, String model,
                           double pricePerHour, String stationId,
                           String imageUrl, String description) {
         String id = FileHelper.generateId();
-        // Sanitise: descriptions must not contain the separator
         String safeDesc = description == null ? "" : description.replace("|", "-");
         String safeImg  = imageUrl    == null ? "" : imageUrl;
         String safeSelr = sellerId    == null ? "ADMIN" : sellerId;
 
         Bike bike;
-         switch (type) {
+        switch (type) {
             case "MOUNTAIN":
                 bike = new MountainBike(id, safeSelr, model, pricePerHour, stationId,
                         AppConstants.BIKE_AVAILABLE, safeImg, safeDesc);
@@ -113,7 +135,9 @@ public class BikeService {
             default:
                 return false;
         }
-        return FileHelper.append(AppConstants.BIKES_FILE, bike.toFileString());
+        boolean saved = FileHelper.append(AppConstants.BIKES_FILE, bike.toFileString());
+        if (saved) stationService.updateBikeCount(stationId, 1);
+        return saved;
     }
 
     public boolean updateStatus(String id, String status) {
@@ -141,6 +165,8 @@ public class BikeService {
     }
 
     public boolean delete(String id) {
+        Bike bike = findById(id);
+        if (bike != null) stationService.updateBikeCount(bike.getStationId(), -1);
         return FileHelper.deleteById(AppConstants.BIKES_FILE, id);
     }
 }
