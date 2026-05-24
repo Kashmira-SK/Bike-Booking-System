@@ -1,5 +1,5 @@
 package com.bikerental.BikeRentalSystem.model;
-
+//me class eken kelinma object ekak hadann ba
 public abstract class Review {
 
     private String id;
