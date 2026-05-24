@@ -1,8 +1,0 @@
-R001|U003|B003|5|Smooth ride, great condition. Loved it!|BIKE|2025-05-01 10:00:00
-R002|U003|B005|4|Electric assist made the hills so easy. Highly recommend.|BIKE|2025-05-03 14:30:00
-R003|U002|B001|5|My own bike, well maintained. Customers love it!|BIKE|2025-05-05 09:15:00
-1778938792178|1778938427265|B001|1|It was terrible. THE BIKE HAD NO WHEELS!!!! OR A CHAIN
-|BIKE|2026-05-16 19:09:52
-1779295917294|1779295802248|006|3|meh..It was ok. did what it was supposed to, nothing too noteworthy though. Do recommend.|BIKE|2026-05-20 22:21:57
-1779434832568|1778938427265|003|1|The seller communication was bad. Had so much trouble finding the place. and he was no help at all.|SERVICE|2026-05-22 12:57:12
-1779435306798|1778938427265|B002|3|It was okay. Nothing to scream about. had some decent fun with the bike too. worked as intended. |BIKE|2026-05-22 13:05:06
