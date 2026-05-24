@@ -1,5 +1,6 @@
 package com.bikerental.BikeRentalSystem.model;
 
+
 import com.bikerental.BikeRentalSystem.util.AppConstants;
 
 public class BikeReview extends Review {
