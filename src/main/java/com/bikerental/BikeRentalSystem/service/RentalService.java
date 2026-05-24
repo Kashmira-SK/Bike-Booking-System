@@ -73,9 +73,11 @@ public class RentalService {
         String type         = p[9];
 
         if (AppConstants.RENTAL_HOURLY.equals(type)) {
-            return new HourlyRental(id, userId, bikeId, startStation, endStation, startTime, endTime, cost, status);
+            return new HourlyRental(id, userId, bikeId, startStation, endStation,
+                    startTime, endTime, cost, status);
         } else {
-            return new DailyRental(id, userId, bikeId, startStation, endStation, startTime, endTime, cost, status);
+            return new DailyRental(id, userId, bikeId, startStation, endStation,
+                    startTime, endTime, cost, status);
         }
     }
 

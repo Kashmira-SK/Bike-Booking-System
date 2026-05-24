@@ -12,6 +12,9 @@ public class HourlyRental extends Rental {
     }
 
     @Override
+    public String getRentalType() { return "HOURLY"; }
+
+    @Override
     public double calculateCost(double pricePerHour) {
         //Cost calculation is handled in RentalService.calculateCost()
         return 0;
