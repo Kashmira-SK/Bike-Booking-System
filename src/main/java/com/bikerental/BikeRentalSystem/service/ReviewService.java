@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+// '@Service' kiyanne Spring Boot walata meka business logic thiyena class ekak kiyala adunala dena eka.
 @Service
 public class ReviewService {
-
+    
+// date and time save wenna ona format eka meken hadanwa
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private Review parseLine(String line) {
@@ -25,7 +26,7 @@ public class ReviewService {
         String comment   = p[4];
         String type      = p[5];
         String timestamp = p[6];
-
+// Type eka "Bike" nam BikeReview object ekak hadanawa, nathnam ServiceReview object ekak hadanawa.
         if (AppConstants.REVIEW_BIKE.equals(type)) {
             return new BikeReview(id, userId, targetId, rating, comment, timestamp);
         } else {
@@ -35,13 +36,14 @@ public class ReviewService {
 
     public List<Review> readAll() {
         List<Review> reviews = new ArrayList<>();
+        // FileHelper eken okkoma peli kiyawala loop ekak haraha eka gane gannawa
         for (String line : FileHelper.readAll(AppConstants.REVIEWS_FILE)) {
             Review r = parseLine(line);
-            if (r != null) reviews.add(r);
+            if (r != null) reviews.add(r);// Waradi nathi data witharak list ekata ekathu karanawa
         }
         return reviews;
     }
-
+// Adala ID ekata match wena review eka witharak hoyala denawa
     public Review findById(String id) {
         String line = FileHelper.findById(AppConstants.REVIEWS_FILE, id);
         return line != null ? parseLine(line) : null;
@@ -52,9 +54,10 @@ public class ReviewService {
         for (Review r : readAll()) {
             if (r.getUserId().equals(userId)) result.add(r);
         }
+        //object eka text file eke anthimata liyanawa
         return result;
     }
-
+// Bike reviews da nathnam Service reviews da kiyala wen karala ganna meka use karanawa.
     public List<Review> findByTarget(String targetId) {
         List<Review> result = new ArrayList<>();
         for (Review r : readAll()) {
@@ -70,23 +73,25 @@ public class ReviewService {
         }
         return result;
     }
-
+// Bike/Service ekakata dila thiyena reviews wala samanya tharu ganana (Average Rating) hoyanawa.
     public double getAverageRating(String targetId) {
         List<Review> reviews = findByTarget(targetId);
         if (reviews.isEmpty()) return 0;
         return reviews.stream().mapToInt(Review::getRating).average().orElse(0);
     }
-
+// Aluth review ekak system ekata add karaddi meka weda karanawa.
     public boolean create(String userId, String targetId, int rating, String comment, String type) {
         if (rating < 1 || rating > 5) return false;
         String id        = FileHelper.generateId();
         String timestamp = LocalDateTime.now().format(FMT);
         Review review;
+        // Type eka anuwa Bike da Service da kiyala object eka hadanawa.
         if (AppConstants.REVIEW_BIKE.equals(type)) {
             review = new BikeReview(id, userId, targetId, rating, comment, timestamp);
         } else {
             review = new ServiceReview(id, userId, targetId, rating, comment, timestamp);
         }
+        //object eka text file eke anthimata liyanawa
         return FileHelper.append(AppConstants.REVIEWS_FILE, review.toFileString());
     }
 
@@ -108,7 +113,7 @@ public class ReviewService {
 
         List<String> lines  = FileHelper.readAll(AppConstants.REVIEWS_FILE);
         List<String> result = new ArrayList<>();
-
+// Loop eken eka peliya gane check karanawa
         for (String line : lines) {
             String[] p = line.split("\\" + AppConstants.SEP);
             result.add(p[0].equals(id) ? review.toFileString() : line);
