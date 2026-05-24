@@ -120,7 +120,7 @@ public class RentalServlet {
             model.addAttribute("error", "Rental not found or already completed.");
             return "returnBike";
         }
-
+        return "redirect:/payments/checkout?rentalId=" + rentalId;
     }
 
     @PostMapping("/cancel/{id}")
