@@ -32,46 +32,57 @@ public abstract class Rental {
     }
 
     public String getId(){
+
         return id;
     }
 
     public void   setId(String id){
+
         this.id = id;
     }
 
     public String getUserId(){
+
         return userId;
     }
 
     public void   setUserId(String u){
+
         this.userId = u;
     }
 
     public String getBikeId(){
+
         return bikeId;
     }
 
     public void   setBikeId(String b){
+
         this.bikeId = b;
     }
 
     public String getStartStation(){
+
         return startStation;
     }
 
     public void   setStartStation(String s){
+
         this.startStation = s;
     }
 
     public String getEndStation(){
+
         return endStation;
     }
 
     public void   setEndStation(String s){
+
         this.endStation = s;
     }
 
     public String getStartTime(){
+
         return startTime;
     }
 
