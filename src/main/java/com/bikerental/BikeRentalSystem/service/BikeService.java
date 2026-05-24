@@ -97,7 +97,7 @@ public class BikeService {
         String safeSelr = sellerId    == null ? "ADMIN" : sellerId;
 
         Bike bike;
-        switch (type) {
+         switch (type) {
             case "MOUNTAIN":
                 bike = new MountainBike(id, safeSelr, model, pricePerHour, stationId,
                         AppConstants.BIKE_AVAILABLE, safeImg, safeDesc);
