@@ -49,7 +49,7 @@ public class RentalService {
         } else {
             long hours = ChronoUnit.HOURS.between(start, end);
             double days = Math.max(1, Math.ceil(hours / 24.0));
-            return days * pricePerHour * 20;   // daily discount vs hourly * 24
+            return days * pricePerHour * 20;   // daily is hourly * 20: around 17% discount
         }
     }
 
