@@ -85,7 +85,7 @@ public class BikeServlet {
         if (description == null) description = "";
 
         boolean success = bikeService.create(sellerId, type, model, pricePerHour, stationId, imageUrl, description);
-        if (!success) {
+         if (!success) {
             uiModel.addAttribute("error", "Failed to add bike.");
             uiModel.addAttribute("stations", stationService.readAll());
             return "addBike";
