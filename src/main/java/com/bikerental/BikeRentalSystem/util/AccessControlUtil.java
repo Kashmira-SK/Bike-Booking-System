@@ -11,7 +11,7 @@ public final class AccessControlUtil {
 
     private AccessControlUtil() {}
 
-    // ── Internals ────────────────────────────────────────────────────────────
+    //Internals
 
     public static User getUser(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
@@ -27,7 +27,7 @@ public final class AccessControlUtil {
         req.getSession(true).setAttribute(AppConstants.SESSION_FLASH_SUCCESS, message);
     }
 
-    // ── Guards ───────────────────────────────────────────────────────────────
+    //Guards
 
     public static boolean requireLogin(HttpServletRequest req,
                                        HttpServletResponse res) throws IOException {
@@ -70,7 +70,7 @@ public final class AccessControlUtil {
         return false;
     }
 
-    // ── Convenience shorthands ───────────────────────────────────────────────
+    //Convenience shorthands
 
     public static boolean requireAdmin(HttpServletRequest req,
                                        HttpServletResponse res) throws IOException {
