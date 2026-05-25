@@ -17,7 +17,7 @@ import java.util.Queue;
 @Service                                                                                            //spring service component
 public class RentalService {
 
-    @Autowired                                                                                     //association gets bike service into rental service
+    @Autowired                                                                                     //Dependency gets bike service into rental service
     private BikeService bikeService;
 
     private final Queue<String> rentalRequestQueue = new LinkedList<>();                           // queue to hold users
@@ -44,7 +44,7 @@ public class RentalService {
 
         if (AppConstants.RENTAL_HOURLY.equals(rental.getRentalType())) {
             long minutes = ChronoUnit.MINUTES.between(start, end);
-            double hours = Math.max(1, Math.ceil(minutes / 60.0));
+            double hours = Math.max(1, Math.ceil(minutes / 60.0));   //minutes to hours rounded up
             return hours * pricePerHour;
         } else {
             long hours = ChronoUnit.HOURS.between(start, end);
@@ -137,7 +137,7 @@ public class RentalService {
 
         // Create rental
         String id = FileHelper.generateId();
-        Rental rental;
+        Rental rental;                                   //polymorphism
 
         if (AppConstants.RENTAL_HOURLY.equals(type)) {
             rental = new HourlyRental(id, userId, bikeId, startStation, endStation, LocalDateTime.now().format(FMT), "", 0, AppConstants.RENTAL_ACTIVE);
@@ -155,7 +155,7 @@ public class RentalService {
         Rental rental = findById(rentalId);
         if (rental == null || !rental.isActive()) return -1;
 
-        // Calculate cost here — single source of truth
+        //actual Calculate cost
         Bike bike = bikeService.findById(rental.getBikeId());
         double pricePerHour = bike != null ? bike.getPricePerHour() : 0;
 
