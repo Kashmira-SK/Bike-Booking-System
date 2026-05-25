@@ -24,17 +24,14 @@ public abstract class Rental {
         this.status       = status;
     }
 
-    public abstract String getRentalType();
+    public abstract String getRentalType();   //forces type identity : hourly, daily
     public abstract double calculateCost(double pricePerHour);
 
     public boolean isActive() {
         return AppConstants.RENTAL_ACTIVE.equals(status);
     }
 
-    public String getId(){
-        return id;
-    }
-
+    public String getId(){return id;}
     public void   setId(String id){
         this.id = id;
     }
@@ -42,7 +39,6 @@ public abstract class Rental {
     public String getUserId(){
         return userId;
     }
-
     public void   setUserId(String u){
         this.userId = u;
     }
@@ -50,7 +46,6 @@ public abstract class Rental {
     public String getBikeId(){
         return bikeId;
     }
-
     public void   setBikeId(String b){
         this.bikeId = b;
     }
@@ -58,7 +53,6 @@ public abstract class Rental {
     public String getStartStation(){
         return startStation;
     }
-
     public void   setStartStation(String s){
         this.startStation = s;
     }
@@ -66,7 +60,6 @@ public abstract class Rental {
     public String getEndStation(){
         return endStation;
     }
-
     public void   setEndStation(String s){
         this.endStation = s;
     }
@@ -74,7 +67,6 @@ public abstract class Rental {
     public String getStartTime(){
         return startTime;
     }
-
     public void   setStartTime(String t){
         this.startTime = t;
     }
@@ -82,7 +74,6 @@ public abstract class Rental {
     public String getEndTime(){
         return endTime;
     }
-
     public void   setEndTime(String t){
         this.endTime = t;
     }
@@ -90,7 +81,6 @@ public abstract class Rental {
     public double getCost(){
         return cost;
     }
-
     public void   setCost(double cost){
         this.cost = cost;
     }
@@ -98,7 +88,6 @@ public abstract class Rental {
     public String getStatus(){
         return status;
     }
-
     public void   setStatus(String status){
         this.status = status;
     }
