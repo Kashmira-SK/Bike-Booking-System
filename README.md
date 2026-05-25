@@ -59,7 +59,7 @@ Developed as a group project for a university assignment.
 1. Clone the repo
 2. Open in IntelliJ IDEA
 3. Run `BikeRentalSystemApplication.java`
-4. Open browser at `http://localhost:8080`
+4. Open browser at `http://localhost:8081`
 
 Default accounts (auto-seeded on first run):
 
