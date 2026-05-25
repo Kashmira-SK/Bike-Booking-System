@@ -2,12 +2,13 @@ package com.bikerental.BikeRentalSystem.model;
 
 public class HourlyRental extends Rental {
 
-    public HourlyRental(String id, String userId, String bikeId,
-                        String startStation, String endStation,
-                        String startTime, String endTime,
-                        double cost, String status) {
-        super(id, userId, bikeId, startStation, endStation,
-                startTime, endTime, cost, status);
+    public HourlyRental(String id, String userId, String bikeId, String startStation, String endStation, String startTime, String endTime, double cost, String status) {
+        super(id, userId, bikeId, startStation, endStation, startTime, endTime, cost, status);
+    }
+
+    @Override
+    public String getRentalType() {
+        return "HOURLY";
     }
 
     @Override
@@ -15,7 +16,7 @@ public class HourlyRental extends Rental {
 
     @Override
     public double calculateCost(double pricePerHour) {
-        // Cost calculation is handled in RentalService.calculateCost()
+        //Cost calculation is handled in RentalService.calculateCost()
         return 0;
     }
 }
