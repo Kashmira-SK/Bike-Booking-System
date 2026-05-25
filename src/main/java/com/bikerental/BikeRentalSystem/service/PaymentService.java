@@ -13,8 +13,10 @@ import java.util.List;
 @Service
 public class PaymentService {
 
+    // Date and time format for payment timestamp
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    // Read payment data from file line and create Payment object
     private Payment parseLine(String line) {
         String[] p = line.split("\\" + AppConstants.SEP);
         if (p.length < 7) return null;
@@ -26,7 +28,8 @@ public class PaymentService {
         String status    = p[5];
         String timestamp = p[6];
 
-        if (AppConstants.METHOD_CASH.equals(method)) {
+         // Create correct payment object based on method
+     if (AppConstants.METHOD_CASH.equals(method)) {
             return new CashPayment(id, rentalId, userId, amount, status, timestamp);
         } else {
             return new CardPayment(id, rentalId, userId, amount, status, timestamp);
@@ -48,13 +51,14 @@ public class PaymentService {
         String[] p = line.split("\\" + AppConstants.SEP);
         if (p.length < 9) return false;
         if (!AppConstants.RENTAL_COMPLETED.equals(p[8])) return false;
+        
         // Check no existing completed payment for this rental
         for (Payment payment : readAll()) {
             if (payment.getRentalId().equals(rentalId) && payment.isCompleted()) return false;
         }
         return true;
     }
-
+      // Read all payments from file
     public List<Payment> readAll() {
         List<Payment> payments = new ArrayList<>();
         for (String line : FileHelper.readAll(AppConstants.PAYMENTS_FILE)) {
@@ -68,7 +72,7 @@ public class PaymentService {
         String line = FileHelper.findById(AppConstants.PAYMENTS_FILE, id);
         return line != null ? parseLine(line) : null;
     }
-
+      // Find all payments of a specific user
     public List<Payment> findByUser(String userId) {
         List<Payment> result = new ArrayList<>();
         for (Payment p : readAll()) {
@@ -84,7 +88,7 @@ public class PaymentService {
         return null;
     }
 
-    // Returns the created Payment on success, null on failure
+     // Returns the created Payment on success, null on failure
       public Payment createPayment(String rentalId, String userId, String method) {
         if (!rentalIsPayable(rentalId)) return null;
 
@@ -102,6 +106,7 @@ public class PaymentService {
         }
 
         boolean saved = FileHelper.append(AppConstants.PAYMENTS_FILE, payment.toFileString());
+         // Return payment if saved successfully
         return saved ? payment : null;
     }
   
