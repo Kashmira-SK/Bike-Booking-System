@@ -1,11 +1,11 @@
-# 🚲 Bike Booking System
+# Bike Rental System
 
-A web-based bike rental management system built with Spring Boot, JSP, and text file storage.
-Developed as a group project using Java OOP principles.
+A web-based bike rental management system built with Spring Boot, JSP, and flat-file storage.
+Developed as a group project for a university assignment.
 
 ---
 
-## 👥 Team & Components
+## Team & Components
 
 | Member | Branch | Component |
 |---|---|---|
@@ -18,117 +18,61 @@ Developed as a group project using Java OOP principles.
 
 ---
 
-## 🏗️ Project Vision — Full File Structure
+## Tech Stack
 
-```
-src/main/java/com/bikerental/BikeRentalSystem/
-│
-├── model/
-│   ├── Rental.java                  ← abstract
-│   ├── HourlyRental.java
-│   ├── DailyRental.java
-│   ├── User.java                    ← abstract
-│   ├── RegularUser.java
-│   ├── AdminUser.java
-│   ├── Bike.java                    ← abstract
-│   ├── ElectricBike.java
-│   ├── MountainBike.java
-│   ├── RoadBike.java
-│   ├── Station.java                 ← abstract
-│   ├── MainStation.java
-│   ├── SatelliteStation.java
-│   ├── Payment.java                 ← abstract
-│   ├── CashPayment.java
-│   ├── CardPayment.java
-│   ├── Review.java                  ← abstract
-│   ├── BikeReview.java
-│   └── ServiceReview.java
-│
-├── service/
-│   ├── RentalService.java
-│   ├── UserService.java
-│   ├── BikeService.java
-│   ├── StationService.java
-│   ├── PaymentService.java
-│   └── ReviewService.java
-│
-├── servlet/
-│   ├── RentalServlet.java
-│   ├── UserServlet.java
-│   ├── BikeServlet.java
-│   ├── StationServlet.java
-│   ├── PaymentServlet.java
-│   └── ReviewServlet.java
-│
-└── util/
-    └── FileHelper.java
-
-src/main/webapp/WEB-INF/views/
-├── rentBike.jsp
-├── returnBike.jsp
-├── rentalHistory.jsp
-├── allRentals.jsp
-├── register.jsp
-├── login.jsp
-├── profile.jsp
-├── addBike.jsp
-├── bikeList.jsp
-├── editBike.jsp
-├── addStation.jsp
-├── stationList.jsp
-├── stationDetail.jsp
-├── checkout.jsp
-├── paymentHistory.jsp
-├── receipt.jsp
-├── submitReview.jsp
-├── viewReviews.jsp
-└── myReviews.jsp
-
-data/
-├── rentals.txt
-├── users.txt
-├── bikes.txt
-├── stations.txt
-├── payments.txt
-└── reviews.txt
-```
-
-## ⚙️ Tech Stack
-
-- **Backend** — Java, Spring Boot
-- **Frontend** — JSP, Bootstrap 5
-- **Storage** — Text files via FileHelper utility
+- **Backend** — Java 17, Spring Boot
+- **Frontend** — JSP, Bootstrap 5, Bootstrap Icons
+- **Storage** — Pipe-delimited text files via `FileHelper` utility
 - **Build** — Maven
 
 ---
 
-## 🔧 How to Run
+## Architecture
+
+**Inheritance hierarchy** — 6 abstract base classes each with 2 concrete subclasses: `User`, `Bike`, `Station`, `Rental`, `Payment`, `Review`.
+
+**Key design decisions:**
+- Cost calculation is centralised in `RentalService` — hourly billed per hour, daily billed at a discounted rate
+- Card payments are saved as `PENDING` and require admin approval; cash payments complete immediately
+- `FileHelper` is the single I/O utility used by all services
+- `BikeService` uses a custom quicksort to return available bikes sorted by price
+- `RentalService` uses a queue to process rental requests
+
+---
+
+## Data File Formats
+
+| File | Format |
+|---|---|
+| `users.txt` | `id\|name\|email\|password\|phone\|role\|status` |
+| `bikes.txt` | `id\|sellerId\|type\|model\|pricePerHour\|stationId\|status\|imageUrl\|description` |
+| `stations.txt` | `id\|name\|address\|city\|capacity\|bikeCount\|type` |
+| `rentals.txt` | `id\|userId\|bikeId\|startStation\|endStation\|startTime\|endTime\|cost\|status\|type` |
+| `payments.txt` | `id\|rentalId\|userId\|amount\|method\|status\|timestamp` |
+| `reviews.txt` | `id\|userId\|targetId\|rating\|comment\|type\|timestamp` |
+| `sellers.txt` | `userId\|location\|description\|approved` |
+
+---
+
+## How to Run
 
 1. Clone the repo
 2. Open in IntelliJ IDEA
-3. Switch to your branch — `git checkout your-branch-name`
-4. Run `BikeRentalSystemApplication.java`
-5. Open browser at `http://localhost:8080`
+3. Run `BikeRentalSystemApplication.java`
+4. Open browser at `http://localhost:8080`
+
+Default accounts (auto-seeded on first run):
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@bikerental.com` | `admin123` |
+| Seller | `sarah@bikerental.com` | `seller123` |
+| User | `user@bikerental.com` | `user123` |
 
 ---
 
-## 🌿 Branch Rules
+## Branching Strategy
 
-- **Never push directly to `main`**
-- Always work on your own branch
-- Pull before you start — `git pull origin your-branch`
-- Commit often with clear messages
-- Main will be merged at the end by the project lead
-
----
-
-## 📁 Data File Formats
-
-| Component | Format |
-|---|---|
-| Rental | `id\|userId\|bikeId\|startStation\|endStation\|startTime\|endTime\|cost\|status\|type` |
-| User | `id\|name\|email\|password\|phone\|role\|status` |
-| Bike | `id\|type\|model\|pricePerHour\|stationId\|status` |
-| Station | `id\|name\|address\|city\|capacity\|bikeCount\|type` |
-| Payment | `id\|rentalId\|userId\|amount\|method\|status\|timestamp` |
-| Review | `id\|userId\|targetId\|rating\|comment\|type\|timestamp` |
+- `main` — stable, production-ready
+- `dev` — integration branch
+- Feature branches: `rental-management`, `user-management`, `bike-management`, `station-management`, `payment-management`, `review-management`
