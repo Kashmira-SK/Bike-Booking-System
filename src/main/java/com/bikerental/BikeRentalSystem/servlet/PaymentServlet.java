@@ -14,10 +14,12 @@ public class PaymentServlet {
 
     @Autowired private PaymentService paymentService;
     @Autowired private RentalService rentalService;
-
+    
+     // Display checkout page for selected rental
     @GetMapping("/checkout")
     public String showCheckout(@RequestParam(required = false) String rentalId,
                                HttpSession session, Model model) {
+        // Check user login session before payment process
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) return "redirect:/login";
         if (rentalId != null) {
@@ -38,6 +40,7 @@ public class PaymentServlet {
             model.addAttribute("payment", payment);
             return "receipt";
         }
+        // Show error message if payment fails
         model.addAttribute("error", "Payment failed. Rental may not be completed or already paid.");
         model.addAttribute("rental", rentalService.findById(rentalId));
         model.addAttribute("rentalId", rentalId);
