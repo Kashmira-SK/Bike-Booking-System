@@ -14,13 +14,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-@Service
+@Service                                                                                            //spring service component
 public class RentalService {
 
-    @Autowired
+    @Autowired                                                                                     //association gets bike service into rental service
     private BikeService bikeService;
 
-    private final Queue<String> rentalRequestQueue = new LinkedList<>();
+    private final Queue<String> rentalRequestQueue = new LinkedList<>();                           // queue to hold users
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public void enqueueRentalRequest(String bikeId){
@@ -29,7 +29,7 @@ public class RentalService {
     public String dequeueRentalRequest(){
         return rentalRequestQueue.poll();
     }
-    public Queue<String> getRentalRequestQueue(){
+    public Queue<String> getRentalRequestQueue(){                                                  //getter; not used on here(only the test)
         return rentalRequestQueue;
     }
 
