@@ -7,7 +7,8 @@ public class CashPayment extends Payment {
     public CashPayment(String id, String rentalId, String userId, double amount, String status, String timestamp) {
         super(id, rentalId, userId, amount, AppConstants.METHOD_CASH, status, timestamp);
     }
-
+    
+    // Override abstract method from Payment class
     @Override
     public String getPaymentMethod() {
         return "Cash";
