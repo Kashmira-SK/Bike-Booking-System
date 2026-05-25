@@ -7,11 +7,6 @@ public class HourlyRental extends Rental {
     }
 
     @Override
-    public String getRentalType() {
-        return "HOURLY";
-    }
-
-    @Override
     public String getRentalType() { return "HOURLY"; }
 
     @Override

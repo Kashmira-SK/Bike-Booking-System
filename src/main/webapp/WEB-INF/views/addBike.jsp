@@ -26,7 +26,7 @@
                     <input type="text" name="model" class="form-control" required placeholder="e.g. Trek Marlin 7">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Price Per Hour (Rs.)</label>
+                    <label class="form-label">Price Per Hour ($)</label>
                     <input type="number" name="pricePerHour" class="form-control" step="0.01" min="0" required placeholder="0.00">
                 </div>
                 <div class="mb-3">
