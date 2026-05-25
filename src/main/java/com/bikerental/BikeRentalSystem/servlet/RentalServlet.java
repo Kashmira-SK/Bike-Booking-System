@@ -25,11 +25,11 @@ public class RentalServlet {
     @GetMapping
     public String allRentals(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
-
+                   //typecast as u2ser
         if (user == null)
             return "redirect:/login";
 
-        model.addAttribute("rentals", rentalService.readAll());
+        model.addAttribute("rentals", rentalService.readAll()); //store this in rentals variable and send to jsp to display
         return "allRentals";
     }
 
@@ -58,7 +58,7 @@ public class RentalServlet {
         return "rentalHistory";
     }
 
-    @GetMapping("/rent")
+    @GetMapping("/rent")                   //won't crash on id check if missing
     public String showRentForm(@RequestParam(required = false) String bikeId, HttpSession session, Model model) {
 
         User user = (User) session.getAttribute("loggedInUser");
