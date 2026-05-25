@@ -20,7 +20,7 @@ public abstract class Payment {
         this.status = status;
         this.timestamp = timestamp;
     }
-
+      // Getter and Setter methods
     public abstract String getPaymentMethod();
 
     public boolean isCompleted() { return "COMPLETED".equals(status); }
