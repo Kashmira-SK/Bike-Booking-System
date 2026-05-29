@@ -1,3 +1,4 @@
-S001|Central Station|No 1 Main St|Colombo|20|5|MAIN
+S001|Central Station|No 1 Main St|Colombo|20|6|MAIN
 S002|Kandy Hub|Temple Rd|Kandy|10|2|SATELLITE
 S003|Galle Fort|Fort Rd|Galle|8|0|SATELLITE
+1779769023955|Anuradhapura|Anuradhapura, 20e road|small city|10|0|SATELLITE
