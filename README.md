@@ -42,8 +42,6 @@ Developed as a group project for a university assignment.
 
 ## Data File Formats
 
-
-one two and 3 then four 
 | File | Format |
 |---|---|
 | `users.txt` | `id\|name\|email\|password\|phone\|role\|status` |
